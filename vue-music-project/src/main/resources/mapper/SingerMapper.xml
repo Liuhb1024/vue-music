@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zetiny.vuemusicproject.dao.SingerMapper">
+    <sql id="singer_all_cols">`id`, `name`, sex, pic, birth, location, introduction</sql>
+
+    <select id="selectById" resultType="Singer">
+        select
+        <include refid="singer_all_cols"></include>
+        from `singer`
+        where id=#{singerId}
+    </select>
+
+    <select id="selectByName" resultType="Singer">
+        select
+        <include refid="singer_all_cols"></include>
+        from `singer`
+        where name like #{name}
+    </select>
+
+    <select id="selectBySex" resultType="Singer">
+        select
+        <include refid="singer_all_cols"></include>
+        from `singer`
+        where sex = #{sex}
+    </select>
+
+    <select id="selectAll" resultType="Singer">
+        select *
+        from `singer`
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Singer">
+        insert into singer (<include refid="singer_all_cols"></include>)
+        values(null,#{name},#{sex},#{pic},#{birth},#{location},#{introduction})
+    </insert>
+
+    <update id="update" parameterType="Singer">
+        update singer
+        set `name`=#{name},
+            sex=#{sex},
+            pic=#{pic},
+            birth=#{birth},
+            location=#{location},
+            introduction=#{introduction}
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from singer
+        where id = #{id}
+    </delete>
+</mapper>

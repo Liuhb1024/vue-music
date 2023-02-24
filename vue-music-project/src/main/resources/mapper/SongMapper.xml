@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zetiny.vuemusicproject.dao.SongMapper">
+    <sql id="song_all_cols">`id`,singer_id, `name`, introduction, create_time, update_time, pic, lyric, url</sql>
+
+    <resultMap id="base_resultMap" type="Song">
+        <id column="id" property="id"/>
+        <result column="singer_id" property="singerId"/>
+        <result column="name" property="name"/>
+        <result column="introduction" property="introduction"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="pic" property="pic"/>
+        <result column="lyric" property="lyric"/>
+        <result column="url" property="url"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="base_resultMap">
+        select
+        <include refid="song_all_cols"/>
+        from `song`
+        where id=#{id}
+    </select>
+
+    <select id="selectBySongListId" resultMap="base_resultMap">
+        select song.* from song_affiliation_of_list
+        left join song on song.id = song_affiliation_of_list.song_id
+        where song_affiliation_of_list.song_list_id = #{songListId}
+    </select>
+
+    <select id="selectBySingerId" resultMap="base_resultMap">
+        select <include refid="song_all_cols"/>
+        from `song`
+        where singer_id = #{singerId}
+    </select>
+
+    <select id="selectByName" resultMap="base_resultMap">
+        select <include refid="song_all_cols"/>
+        from `song`
+        where name like #{name}
+    </select>
+
+    <select id="selectAll" resultMap="base_resultMap">
+        select <include refid="song_all_cols"/>
+        from `song`
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Song">
+        insert into song (<include refid="song_all_cols"/>)
+        values(null,#{singerId}, #{name},#{introduction},#{createTime},#{updateTime},#{pic},#{lyric},#{url})
+    </insert>
+
+    <update id="update" parameterType="Song">
+        update song
+        set singer_id=#{singerId},
+            `name`=#{name},
+            introduction=#{introduction},
+            update_time=#{updateTime},
+            pic=#{pic},
+            lyric=#{lyric},
+            url=#{url}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from song
+        where id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,4 @@
+# main
+spring:
+  profiles:
+    active: dev

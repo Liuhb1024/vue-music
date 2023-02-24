@@ -1,0 +1,29 @@
+$theme-color: rgb(38, 142, 202);
+$hover-color: rgb(19, 123, 207);
+
+@mixin border-bottom-style($px, $borderType, $color) {
+    border-bottom: $px $borderType $color;
+}
+
+@mixin normal-border-style($px, $borderType, $color) {
+    border: $px $borderType $color;
+}
+
+@mixin active-border-style($px, $borderType, $color) {
+    border-bottom: $px $borderType $color;
+}
+
+.active {
+    color: $theme-color;
+    @include active-border-style(3px, solid, $theme-color);
+}
+
+@mixin button-link {
+    color: $theme-color;
+    cursor: pointer;
+}
+
+@mixin button-hover {
+    color: $hover-color;
+    cursor: pointer;
+}

@@ -1,0 +1,51 @@
+@import '@/assets/scss/effects';
+
+@mixin playlist-content {
+    ul {
+        width: 100%;
+    }
+
+    li {
+        @include border-bottom-style(2px, solid, rgb(221, 221, 221));
+    }
+
+    .song-item {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+
+        >span {
+            display: inline-block;
+            margin: 10px;
+            width: 150px;
+            flex: 1 1 100px;
+            line-height: 39px;
+        }
+
+        .item-title {
+            flex: 3 1 300px;
+            text-align: left;
+
+            span:not(:nth-of-type(1)) {
+                display: inline-block;
+                margin-left: 10px;
+                float: right;
+                font-size: 2em;
+                color: rgb(126, 180, 241);
+                cursor: pointer;
+
+                &:hover {
+                    color: rgb(45, 140, 248);
+                }
+            }
+
+            .fa-outline-dark-gray1 {
+                color: #fff;
+                text-shadow: -1px -1px 0 #999,
+                    1px -1px 0 #999,
+                    -1px 1px 0 #999,
+                    1px 1px 0 #999;
+            }
+        }
+    }
+}

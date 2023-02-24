@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zetiny.vuemusicproject.dao.ConsumerMapper">
+    <sql id="BaseConsumerCols">`id`, username, password, sex, phone_num, email, birth, introduction, location, avatar, create_time, update_time</sql>
+
+    <resultMap id="BaseResultMap" type="Consumer">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="phone_num" property="phoneNum"/>
+        <result column="email" property="email"/>
+        <result column="birth" property="birth"/>
+        <result column="introduction" property="introduction"/>
+        <result column="location" property="location"/>
+        <result column="avatar" property="avatar"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select <include refid="BaseConsumerCols"/>
+        from `consumer`
+        where id=#{consumerId}
+    </select>
+
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        select <include refid="BaseConsumerCols"/>
+        from `consumer`
+        where username like #{username}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="BaseConsumerCols"/>
+        from `consumer`
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Consumer">
+        insert into consumer (<include refid="BaseConsumerCols"/>)
+        values(null,#{username},#{password},#{sex},#{phoneNum},#{email},#{birth},#{introduction},#{location},#{avatar},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="Consumer">
+        update consumer
+        set `username`=#{username},
+            password=#{password},
+            sex=#{sex},
+            phone_num=#{phoneNum},
+            email=#{email},
+            birth=#{birth},
+            introduction=#{introduction},
+            location=#{location},
+            avatar=#{avatar},
+            create_time=#{createTime},
+            update_time=#{updateTime}
+        where id=#{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from consumer
+        where id = #{id}
+    </delete>
+
+    <select id="verifyPassword" resultMap="BaseResultMap">
+        select <include refid="BaseConsumerCols"/>
+        from `consumer`
+        where (username=#{username} or phone_num=#{phoneNum}) and password=#{password}
+    </select>
+</mapper>

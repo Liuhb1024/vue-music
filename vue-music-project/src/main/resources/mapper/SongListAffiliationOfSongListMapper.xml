@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zetiny.vuemusicproject.dao.SongAffiliationOfSongListMapper">
+    <sql id="song_list_all_cols">`id`, song_id, song_list_id</sql>
+
+    <resultMap id="BaseResultMap" type="SongAffiliationOfSongList">
+        <id column="id" property="id"/>
+        <result column="song_id" property="songId"/>
+        <result column="song_list_id" property="songListId"/>
+    </resultMap>
+
+    <select id="selectId" resultMap="BaseResultMap">
+        select <include refid="song_list_all_cols"/>
+        from `song_affiliation_of_list`
+        where id=#{id}
+    </select>
+
+    <select id="selectByCandidateKeys" resultType="Integer">
+        select count(*)
+        from `song_affiliation_of_list`
+        where song_id=#{songId} and song_list_id=#{songListId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="SongAffiliationOfSongList">
+        insert into song_affiliation_of_list (<include refid="song_list_all_cols"/>)
+        values(null,#{songId}, #{songListId})
+    </insert>
+
+    <update id="update" parameterType="SongAffiliationOfSongList">
+        update song_affiliation_of_list
+        set song_id=#{songId},
+            song_list_id=#{songListId}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from song_affiliation_of_list
+        where song_id=#{songId} and song_list_id=#{songListId}
+    </delete>
+</mapper>

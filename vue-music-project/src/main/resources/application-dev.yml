@@ -1,0 +1,34 @@
+# development environment
+server:
+  port: 9000
+  servlet:
+    encoding:
+      enabled: true #springboot默认配置了CharacterEncodingFilter 默认编码格式为ISO-8859-1 这里设置为false的作用是关闭系统默认过滤器转而使用自定义过滤器
+    context-path: /myvue3project
+
+#spring settings
+spring:
+  mvc:
+    static-path-pattern: /**
+  datasource:
+    url: jdbc:mysql://localhost:3306/vue_spring?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root0000
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: top.zetiny.vuemusicproject.bean
+  configuration:
+    log-impl: #org.apache.ibatis.logging.stdout.StdOutImpl
+
+

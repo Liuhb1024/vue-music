@@ -1,0 +1,27 @@
+@mixin z-index-top {
+    z-index: 7;
+}
+
+@mixin z-index-higher {
+    z-index: 6;
+}
+
+@mixin z-index-high {
+    z-index: 5;
+}
+
+@mixin z-index-middle {
+    z-index: 4;
+}
+
+@mixin z-index-low {
+    z-index: 3;
+}
+
+@mixin z-index-lower {
+    z-index: 2;
+}
+
+@mixin z-index-bottom {
+    z-index: 1;
+}

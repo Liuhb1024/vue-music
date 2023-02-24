@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.zetiny.vuemusicproject.dao.FavoriteMapper">
+    <sql id="favorite_all_cols">`id`,consumer_id, song_list_id, create_time</sql>
+
+    <resultMap id="base_resultMap" type="Favorite">
+        <id column="id" property="id"/>
+        <result column="consumer_id" property="consumerId"/>
+        <result column="song_list_id" property="songListId"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="baseResultMapOfSongList" type="SongList">
+        <id property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="consumerId" column="consumer_id"/>
+        <result property="title" column="title"/>
+        <result property="pic" column="pic"/>
+        <result property="introduction" column="introduction"/>
+        <result property="style" column="style"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="base_resultMap">
+        select <include refid="favorite_all_cols"/>
+        from `favorite`
+        where id=#{id}
+    </select>
+
+    <select id="selectSongListsByConsumerId" resultMap="baseResultMapOfSongList">
+        select song_list.`id`, `type`, favorite.consumer_id, title, pic, introduction, `style` from song_list
+        join favorite on favorite.song_list_id = song_list.id
+        where favorite.consumer_id = #{consumerId}
+    </select>
+
+    <select id="selectAll" resultMap="base_resultMap">
+        select <include refid="favorite_all_cols"/>
+        from `favorite`
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Favorite">
+        insert into favorite (<include refid="favorite_all_cols"/>)
+        values(null,#{consumerId},#{songListId},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="Favorite">
+        update `favorite`
+        set `consumer_id`=#{consumerId},
+            `song_list_id`=#{songListId},
+            `create_time`=#{createTime},
+        where `id` = #{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from `favorite`
+        where consumer_id = #{consumerId} and song_list_id = #{songListId}
+    </delete>
+
+    <delete id="deleteBySongListId">
+        delete
+        from favorite
+        where song_list_id = #{songListId}
+    </delete>
+</mapper>
