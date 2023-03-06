@@ -3,7 +3,7 @@ Navicat MySQL Data Transfer
 
 Source Server         : ssm_review
 Source Server Version : 50519
-Source Host           : localhost:3306
+Source Host           : localhost:3306 
 Source Database       : vue_spring
 
 Target Server Type    : MYSQL
@@ -803,7 +803,7 @@ INSERT INTO `song_list` VALUES ('80', '各种乐器演绎流行曲', '/img/songL
 INSERT INTO `song_list` VALUES ('81', '听, 吉他在唱歌', '/img/song-list-img/default_song-list_img.jpg', '听吉他谱写那些熟悉的旋律，遇见不一样的感动，电吉他、尤克里里会客串哦', '乐器', '0', '0');
 INSERT INTO `song_list` VALUES ('82', '还不快去练琴？', '/img/song-list-img/default_song-list_img.jpg', '都是自己很喜欢的吉他指弹', '乐器', '0', '0');
 INSERT INTO `song_list` VALUES ('83', '国风传统器乐赏~~♪', '/img/song-list-img/default_song-list_img.jpg', '中国音乐是光辉灿烂的中国文化的一个重要组成部分。当古典音乐流泻而出的一刹那间，你可以清楚的看到，在空气中流动的是高山、是流水、是丝竹、是冬雪、是千古的生命，那份说不出、道不尽的感动，就是中国古典音乐之美。', '乐器', '0', '0');
-INSERT INTO `song_list` VALUES ('84', '『钢琴纯音』八十八个黑白键勾勒出的美', '/img/song-list-img/default_song-list_img.jpg', '钢琴如生活，是一首永远弹不完的小曲', '乐器', '1', '65');
+INSERT INTO `song_list` VALUES ('84', '『钢琴纯音』 八十八个黑白键勾勒出的美', '/img/song-list-img/default_song-list_img.jpg', '钢琴如生活，是一首永远弹不完的小曲', '乐器', '1', '65');
 INSERT INTO `song_list` VALUES ('87', 'GamePlay', '/img/song-list-img/default_song-list_img.jpg', '游戏时播放', '电子音乐', '1', '65');
 INSERT INTO `song_list` VALUES ('90', '第二个歌单', '/img/song-list-img/default_song-list_img.jpg', '第二个歌单', '无', '1', '65');
 
