@@ -1,6 +1,6 @@
 # vue2-music
 
-##项目简介
+## 项目简介
 
 ​    本项目是是基于Vue 2 和SpringBoot2开发的一个简易音乐网站。
 
@@ -11,37 +11,37 @@
 
 
 
-##项目展示
+## 项目展示
 
-###网站前台
+### 网站前台
 
-####首页
+#### 首页
 
 ![image-20230306113243039](README.assets/image-20230306113243039.png)
 
-####检索所有歌手
+#### 检索所有歌手
 
 ![image-20230306125551940](README.assets/image-20230306125551940.png)
 
 
 
-####检索所有歌单
+#### 检索所有歌单
 
 ![image-20230306113326730](README.assets/image-20230306113326730.png)
 
 
 
-####歌单详情页
+#### 歌单详情页
 
 ![image-20230306113341030](README.assets/image-20230306113341030.png)
 
 
 
-####未登录-我的音乐
+#### 未登录-我的音乐
 
 ![9](README.assets/9.png)
 
-####已登录-我的音乐
+#### 已登录-我的音乐
 
 ![image-20230306113837014](README.assets/image-20230306113837014.png)
 
@@ -52,8 +52,8 @@
 ![image-20230306113201662](README.assets/image-20230306113201662.png)
 
 
-###网站后台
-####后台登录
+### 网站后台
+#### 后台登录
 
 ![1](README.assets/1.png)
 
@@ -65,33 +65,33 @@
 
 
 
-####歌手管理
+#### 歌手管理
 
 ![2](README.assets/2.png)
 
 
 
-####歌手-歌曲管理
+#### 歌手-歌曲管理
 
 ![3](README.assets/3.png)
 
 
 
-####歌单管理
+#### 歌单管理
 
 ![4](README.assets/4.png)
 
 
 
-####歌单-歌曲管理
+#### 歌单-歌曲管理
 
 ![5](README.assets/5.png)
 
 
 
-##环境依赖
+## 环境依赖
 
-###前端
+### 前端
 
 ```text
 ###环境依赖###
@@ -120,7 +120,7 @@
 
 
 
-##部署步骤
+## 部署步骤
 
 1. 克隆
 
@@ -142,7 +142,7 @@ git clone https://gitee.com/zetiny/vue2-music.git
 
 
 
-##目录结构
+## 目录结构
 
 ### vue-music-project 后端
 
@@ -183,7 +183,7 @@ git clone https://gitee.com/zetiny/vue2-music.git
 
 
 
-###vue-music-manage 网站后台
+### vue-music-manage 网站后台
 
 ```text
 ### vue-music-manage
@@ -213,7 +213,7 @@ git clone https://gitee.com/zetiny/vue2-music.git
 
 
 
-###vue-music-client 网站前台
+### vue-music-client 网站前台
 
 ```text
 ### vue-music-manage
@@ -238,13 +238,13 @@ git clone https://gitee.com/zetiny/vue2-music.git
 
 
 
-##**许可证**
+## **许可证**
 
 Licensed under the  [Apache License](http://www.apache.org/licenses/), Version 2.0, January 2004. 
 
 
 
-##其他
+## 其他
 
 Happy Coding Everyday!
 
