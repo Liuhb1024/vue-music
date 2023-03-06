@@ -806,3 +806,4 @@ INSERT INTO `song_list` VALUES ('83', '国风传统器乐赏~~♪', '/img/song-l
 INSERT INTO `song_list` VALUES ('84', '『钢琴纯音』八十八个黑白键勾勒出的美', '/img/song-list-img/default_song-list_img.jpg', '钢琴如生活，是一首永远弹不完的小曲', '乐器', '1', '65');
 INSERT INTO `song_list` VALUES ('87', 'GamePlay', '/img/song-list-img/default_song-list_img.jpg', '游戏时播放', '电子音乐', '1', '65');
 INSERT INTO `song_list` VALUES ('90', '第二个歌单', '/img/song-list-img/default_song-list_img.jpg', '第二个歌单', '无', '1', '65');
+
