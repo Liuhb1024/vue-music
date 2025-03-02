@@ -1,24 +1,76 @@
 <template>
-<div class="sign-up">
-    <div class="title">
-        <span>登录/注册</span>
-    </div>
-    <div class="registerForm">
-        <el-form ref="registerForm" :model="registerForm" :rules="rules">
-            <el-form-item prop="phoneNum">
-                <el-input placeholder="请输入手机号" v-model="registerForm.phoneNum" clearable>
-                    <template v-slot:prepend>用户名/手机号</template>
-                </el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-                <el-input placeholder="请输入密码" v-model="registerForm.password" type="password" show-password clearable>
-                    <template v-slot:prepend>密码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</template>
-                </el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button @click="submitForm" type="primary" plain>登录/注册</el-button>
-            </el-form-item>
-        </el-form>
+<div class="sign-in-page">
+    <div class="sign-in">
+        <div class="left-content">
+            <div class="logo">
+                <i class="el-icon-headset"></i>
+                <span>音乐，让生活更美好</span>
+            </div>
+            <div class="description">
+                发现、聆听、分享
+            </div>
+        </div>
+
+        <div class="sign-in-content">
+            <div class="sign-in-box">
+                <div class="sign-in-header">
+                    <i class="el-icon-headset"></i>
+                    <h1>Music</h1>
+                </div>
+
+                <el-form ref="registerForm" :model="registerForm" :rules="rules" label-width="0" class="sign-in-form">
+                    <el-form-item prop="phoneNum">
+                        <el-input 
+                            v-model="registerForm.phoneNum" 
+                            prefix-icon="el-icon-user" 
+                            placeholder="用户名/手机号"
+                            clearable>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item prop="password">
+                        <el-input 
+                            v-model="registerForm.password" 
+                            prefix-icon="el-icon-lock" 
+                            type="password" 
+                            placeholder="密码"
+                            show-password
+                            clearable
+                            @keyup.enter.native="submitForm">
+                        </el-input>
+                    </el-form-item>
+                    <div class="form-options">
+                        <el-checkbox v-model="rememberMe">记住我</el-checkbox>
+                        <router-link to="/register" class="to-register">没有账号？去注册</router-link>
+                    </div>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm" :loading="loading">
+                            {{ loading ? '处理中...' : '登录/注册' }}
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+
+                <div class="sign-in-footer">
+                    <div class="divider">
+                        <span>其他登录方式</span>
+                    </div>
+                    <div class="social-login">
+                        <i class="el-icon-s-platform"></i>
+                        <i class="el-icon-s-custom"></i>
+                        <i class="el-icon-s-promotion"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-content">
+            <div class="logo">
+                <i class="el-icon-video-play"></i>
+                <span>开启音乐之旅</span>
+            </div>
+            <div class="description">
+                千万曲库任你选择
+            </div>
+        </div>
     </div>
 </div>
 </template>
@@ -37,7 +89,7 @@ import {
 } from '@/api/consumer'
 
 export default {
-    name: 'SignUp',
+    name: 'SignIn',
     data() {
         return {
             registerForm: {
@@ -53,10 +105,12 @@ export default {
                 createTime: '',
                 updateTime: ''
             },
+            rememberMe: false,
+            loading: false,
             rules: {
                 phoneNum: [{
                         required: true,
-                        message: '请输入手机号',
+                        message: '请输入用户名或手机号',
                         trigger: 'blur'
                     },
                     {
@@ -73,7 +127,7 @@ export default {
                     },
                     {
                         min: 6,
-                        message: '长度不得小于6个字符，且包含大小写字符各一个',
+                        message: '长度不得小于6个字符',
                         trigger: ['blur', 'change']
                     }
                 ]
@@ -85,6 +139,7 @@ export default {
             this.$refs.registerForm.validate((valid) => {
                 //验证通过，提交用户数据
                 if (valid) {
+                    this.loading = true;
                     this.registerForm.createTime = dateToString(new Date())
                     this.registerForm.updateTime = dateToString(new Date())
                     this.registerForm.birth = dateToString(new Date())
@@ -100,6 +155,7 @@ export default {
                     }).then(() => {
                         // 手机号未被占用或用户名未被使用，则进行登录
                         login(this.registerForm).then(jsonData => {
+                            this.loading = false;
                             // 登录成功
                             if (jsonData !== null) {
                                 this.$message({
@@ -122,12 +178,16 @@ export default {
                                     duration: 2000
                                 })
                             }
-                        }).catch(err => console.log(err))
+                        }).catch(err => {
+                            this.loading = false;
+                            console.log(err);
+                        })
                     }, () => {
                         // 进行注册
                         //生成uuid作为默认用户名
                         this.registerForm.username = nanoid()
                         register(this.registerForm).then(responseBody => {
+                            this.loading = false;
                             //注册成功,等待三秒跳转到首页
                             if (responseBody.code === 1) {
                                 this.$message({
@@ -148,66 +208,14 @@ export default {
                                     duration: 2000
                                 })
                             }
-                        }).catch(err => console.log(err))
-                    }).catch(err => console.log(err))
-
-                    //如果手机号已被注册，则登录，否则进行注册
-                    /* if (isPresent) {
-                        let username = this.registerForm.username
-                        let phoneNum = this.registerForm.phoneNum
-                        let password = this.registerForm.password
-                        login(username, phoneNum, password).then(jsonData => {
-                            // 登录成功
-                            if (jsonData !== null) {
-                                this.$message({
-                                    message: '注册成功,三秒后跳转到首页',
-                                    type: 'success',
-                                    duration: 3000
-                                })
-                                setTimeout(() => {
-                                    //保存用户状态
-                                    this.$store.commit('SET_USER_ID', jsonData.id)
-                                    this.$store.commit('SET_USER_NAME', jsonData.username)
-                                    this.$store.commit('SET_USER_AVATAR', jsonData.avatar)
-                                    this.$store.commit('SET_LOGIN_STATUS', true)
-                                    //三秒后跳转到首页
-                                    this.$router.push('/home')
-                                }, 3000)
-                            } else {
-                                //登录失败
-                                this.$message({
-                                    message: '登录失败，请检查输入的信息是否有误！',
-                                    type: 'error',
-                                    duration: 2000
-                                })
-                            }
-                        }).catch(err => console.log(err))
-                    } else {
-                        // 尝试提交
-                        register(userData).then(responseBody => {
-                            //注册成功,等待三秒跳转到首页
-                            if (responseBody.code === 1) {
-                                // this.$router.push('/home')
-                                this.$message({
-                                    message: '注册成功,三秒后跳转到首页',
-                                    type: 'success',
-                                    duration: 3000
-                                })
-                                setTimeout(() => {
-                                    //三秒后跳转到首页
-                                    this.$store.commit('SET_LOGIN_STATUS', true)
-                                    this.$router.push('/home')
-                                }, 3000)
-                            } else {
-                                //注册失败
-                                this.$message({
-                                    message: responseBody.msg,
-                                    type: 'error',
-                                    duration: 2000
-                                })
-                            }
-                        }).catch(err => console.log(err))
-                    } */
+                        }).catch(err => {
+                            this.loading = false;
+                            console.log(err);
+                        })
+                    }).catch(err => {
+                        this.loading = false;
+                        console.log(err);
+                    })
                 } else {
                     this.$message({
                         message: '输入的信息有误，请重试',
@@ -223,18 +231,279 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sign-up {
-    width: 500px;
-    margin: 20px auto;
+.sign-in-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000; // 确保覆盖其他内容
+    background: #2d3a4b;
 
-    .title {
-        font-size: 30px;
-        text-align: center;
+    .sign-in {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .left-content, .right-content {
+            width: 25%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            transition: all 0.3s;
+            
+            .logo {
+                text-align: center;
+                margin-bottom: 20px;
+                
+                i {
+                    font-size: 48px;
+                    color: rgba(255, 255, 255, 0.7);
+                    margin-bottom: 15px;
+                    display: block;
+                }
+                
+                span {
+                    font-size: 24px;
+                    color: rgba(255, 255, 255, 0.7);
+                    display: block;
+                }
+            }
+            
+            .description {
+                font-size: 16px;
+                color: rgba(255, 255, 255, 0.5);
+                text-align: center;
+            }
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.05);
+                
+                .logo {
+                    i, span {
+                        color: #fff;
+                    }
+                }
+                
+                .description {
+                    color: rgba(255, 255, 255, 0.8);
+                }
+            }
+        }
+        
+        .sign-in-content {
+            width: 420px;
+            padding: 20px;
+            
+            .sign-in-box {
+                background: transparent;
+                
+                .sign-in-header {
+                    text-align: center;
+                    margin-bottom: 40px;
+                    
+                    i {
+                        font-size: 40px;
+                        color: #fff;
+                        margin-bottom: 10px;
+                    }
+                    
+                    h1 {
+                        font-size: 26px;
+                        color: #fff;
+                        margin: 0;
+                        font-weight: normal;
+                    }
+                }
+                
+                .sign-in-form {
+                    .el-input {
+                        margin-bottom: 20px;
+                        
+                        /deep/ .el-input__inner {
+                            height: 47px;
+                            background: rgba(255, 255, 255, 0.1);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 4px;
+                            color: #fff;
+                            padding-left: 45px;
+                            
+                            &::placeholder {
+                                color: rgba(255, 255, 255, 0.7);
+                            }
+                            
+                            &:focus {
+                                border-color: #409EFF;
+                            }
+                        }
+                        
+                        /deep/ .el-input__prefix {
+                            left: 15px;
+                            
+                            i {
+                                font-size: 18px;
+                                color: rgba(255, 255, 255, 0.7);
+                            }
+                        }
+                    }
+                    
+                    .form-options {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                        color: #fff;
+                        
+                        /deep/ .el-checkbox {
+                            color: #fff;
+                            
+                            .el-checkbox__label {
+                                color: #fff;
+                            }
+                            
+                            .el-checkbox__inner {
+                                background: transparent;
+                                border-color: rgba(255, 255, 255, 0.3);
+                            }
+                            
+                            &.is-checked .el-checkbox__inner {
+                                background-color: #409EFF;
+                                border-color: #409EFF;
+                            }
+                        }
+                        
+                        .to-register {
+                            color: #fff;
+                            text-decoration: none;
+                            font-size: 14px;
+                            opacity: 0.8;
+                            
+                            &:hover {
+                                opacity: 1;
+                                color: #409EFF;
+                            }
+                        }
+                    }
+                    
+                    .el-button {
+                        width: 100%;
+                        height: 47px;
+                        background: #409EFF;
+                        border: none;
+                        font-size: 16px;
+                        
+                        &:hover, &:focus {
+                            background: #66b1ff;
+                        }
+                    }
+                }
+                
+                .sign-in-footer {
+                    margin-top: 30px;
+                    text-align: center;
+                    
+                    .divider {
+                        position: relative;
+                        margin: 20px 0;
+                        
+                        &:before, &:after {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            width: 35%;
+                            height: 1px;
+                            background: rgba(255, 255, 255, 0.2);
+                        }
+                        
+                        &:before {
+                            left: 0;
+                        }
+                        
+                        &:after {
+                            right: 0;
+                        }
+                        
+                        span {
+                            display: inline-block;
+                            padding: 0 10px;
+                            color: rgba(255, 255, 255, 0.7);
+                            font-size: 14px;
+                            background: #2d3a4b;
+                        }
+                    }
+                    
+                    .social-login {
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 20px;
+                        
+                        i {
+                            font-size: 24px;
+                            color: rgba(255, 255, 255, 0.7);
+                            margin: 0 15px;
+                            cursor: pointer;
+                            transition: all 0.3s;
+                            
+                            &:hover {
+                                color: #fff;
+                                transform: translateY(-2px);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+}
 
-    .registerForm {
-        .el-button {
-            width: 100%;
+// 响应式调整
+@media screen and (max-width: 1200px) {
+    .sign-in-page {
+        .sign-in {
+            .left-content, .right-content {
+                width: 20%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .sign-in-page {
+        .sign-in {
+            .left-content, .right-content {
+                display: none;
+            }
+            
+            .sign-in-content {
+                width: 90%;
+                max-width: 420px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+// 保持原有的移动端响应式样式
+@media screen and (max-width: 480px) {
+    .sign-in-page {
+        .sign-in {
+            .sign-in-content {
+                width: 90%;
+                
+                .sign-in-box {
+                    .sign-in-header {
+                        h1 {
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
         }
     }
 }

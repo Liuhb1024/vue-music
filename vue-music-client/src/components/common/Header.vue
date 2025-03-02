@@ -22,7 +22,7 @@
     <!-- 未登录显示按钮 -->
     <div class="user-login" v-if="!loginStatus">
         <div>
-            <el-button type="primary" @click="handleLoginOrRegister">登录/注册</el-button>
+            <el-button type="primary" @click="handleLoginOrRegister">去登录/注册</el-button>
         </div>
     </div>
     <!-- 登录后显示用户信息 -->
