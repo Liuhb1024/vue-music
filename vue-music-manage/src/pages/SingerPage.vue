@@ -52,7 +52,7 @@
             </el-table-column>
         </el-table>
         <div class="block">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="tableData.length" background>
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="tableData.length" background>
             </el-pagination>
         </div>
     </div>
@@ -204,13 +204,18 @@ export default {
         },
         /**
          * 获取歌手信息数据
+         * @param {Number} keepPage 是否保持当前页码
          */
-        getTableData() {
+        getTableData(keepPage = false) {
+            const currentPageBackup = keepPage ? this.currentPage : 1
             this.tableData = []
             this.tempTableData = []
             queryAllSingers().then(jsonData => {
                 this.tableData = jsonData
                 this.tempTableData = jsonData
+                this.$nextTick(() => {
+                    this.currentPage = currentPageBackup
+                })
             }).catch(err => console.log(err))
         },
         /**
@@ -224,7 +229,7 @@ export default {
                         type: 'success',
                         duration: 2000
                     })
-                    this.getTableData()
+                    this.getTableData(true)  // 保持当前页码
                 } else {
                     this.$message({
                         message: jsonData.msg,
@@ -285,7 +290,7 @@ export default {
                         type: 'success',
                         duration: 2000
                     })
-                    this.getTableData()
+                    this.getTableData(true)  // 保持当前页码
                 } else {
                     this.$message({
                         message: jsonData.msg,
@@ -308,7 +313,7 @@ export default {
                         duration: 2000
                     })
                     this.delDialogVisible = false
-                    this.getTableData()
+                    this.getTableData(true)  // 保持当前页码
                 } else {
                     this.$message({
                         message: '删除失败!',
@@ -331,6 +336,22 @@ export default {
                     singerName
                 }
             })
+        },
+        handleAvatarSuccess(response) {
+            if (response.code == 1) {
+                this.getTableData(true)  // 保持当前页码
+                this.$message({
+                    message: response.msg,
+                    type: 'success',
+                    duration: 2000
+                })
+            } else {
+                this.$message({
+                    message: response.msg,
+                    type: 'error',
+                    duration: 2000
+                })
+            }
         }
     },
     computed: {

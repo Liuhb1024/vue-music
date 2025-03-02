@@ -60,6 +60,12 @@ const routes = [{
       index: 'songlistdetail',
       iconClass: 'el-icon-document',
       component: ()=> import('@/pages/SongListDetailPage.vue')
+    },{
+      path: 'profile',
+      component: () => import('@/pages/ProfilePage'),
+      meta: {
+        title: '个人中心'
+      }
     }]
   }/* {
     path: '/about',

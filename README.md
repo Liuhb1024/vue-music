@@ -1,112 +1,371 @@
-# 飞享音乐网站 
+# 飞享音乐网站
 
-## 项目简介
+## 项目概述
 
-基于 `Vue 2` 和 `SpringBoot2` 开发的一个音乐网站。
+飞享音乐网站是一个基于Vue 2和SpringBoot 2开发的前后端分离音乐平台，提供音乐播放、歌手检索、歌单管理等功能，同时包含完整的后台管理系统。
 
-使用 `Vue 2` 及 `SpringBoot 2` 框架开发了一个前后端分离的音乐网站。
+## 项目架构
 
-用户能够检索歌手及音乐，播放音乐，能够创建、收藏歌单。
+项目采用前后端分离架构，由三个主要部分组成：
 
-网站后台能够管理用户、音乐、歌单、歌手数据。
+1. **前台客户端** (vue-music-client)：面向用户的音乐网站界面
+2. **后台管理系统** (vue-music-manage)：用于管理网站内容的管理员界面
+3. **后端服务** (vue-music-project)：提供API接口的SpringBoot应用
 
+## 技术栈
 
+### 前端技术栈
 
-**项目要点**
+- **核心框架**：Vue 2
+- **路由管理**：Vue Router
+- **状态管理**：Vuex
+- **UI组件库**：Element UI
+- **HTTP客户端**：Axios
+- **CSS预处理器**：Sass
+- **其他**：JavaScript、Font Awesome
 
-+ 前端主要使用了 `JavaScript`、`Vue2` 、`Axios`、`ElementUI`、`Sass`。
-+  后端主要使用了 `SpringBoot 2` 、`Mybatis`、`MySQL`。
+### 后端技术栈
 
-* 封装了播放器组件及播放器的播放条组件。播放条组件用于控制音乐的播放/暂停、前/后切换、循环播放、歌曲封面显示、音量滑动控制、播放进度选择。同时能够进行根据播放列表控制歌曲播放状态、收藏到歌单等操作。
-* 用户在登录后能够根据不同的分类条件检索歌手及音乐，能够将音乐添加到播放列表并创建歌单收藏音乐。
-* 后台能对所有的用户及其歌单、上传的音乐、已创建的歌单数据进行管理。
+- **核心框架**：Spring Boot 2
+- **ORM框架**：MyBatis
+- **数据库**：MySQL
+- **项目管理**：Maven
 
+## 功能特点
 
+### 用户端功能
+
+- **音乐播放**：支持播放/暂停、前/后切换、循环播放、音量控制、播放进度选择
+- **歌手浏览**：支持按不同分类条件检索歌手
+- **歌单管理**：用户可创建、收藏歌单
+- **音乐检索**：支持按不同条件检索音乐
+- **个人中心**：管理个人收藏的歌单和音乐
+
+### 管理端功能
+
+- **用户管理**：管理所有用户信息
+- **歌手管理**：添加、编辑、删除歌手信息
+- **歌曲管理**：上传、编辑、删除音乐
+- **歌单管理**：创建、编辑、删除歌单
+- **数据统计**：查看网站数据统计信息
+
+## 项目结构
+
+### 整体结构
+
+```
+飞享音乐网站
+├── vue-music-client/    # 前台客户端
+├── vue-music-manage/    # 后台管理系统
+├── vue-music-project/   # 后端服务
+└── vue2_music.sql       # 数据库脚本
+```
+
+### 前台客户端 (vue-music-client)
+
+```
+vue-music-client
+├── public/              # 静态资源
+└── src/
+    ├── api/             # 前端数据请求接口
+    ├── assets/          # 静态资源目录
+    │   ├── img/         # 图片资源
+    │   ├── js/          # JavaScript文件
+    │   │   └── data/    # 静态数据
+    │   └── scss/        # SCSS样式文件
+    ├── components/      # Vue组件
+    │   ├── common/      # 公共组件
+    │   └── search/      # 搜索组件
+    ├── mixins/          # 混入
+    ├── pages/           # 路由组件
+    ├── router/          # 路由
+    ├── store/           # 状态管理
+    ├── utils/           # 工具类
+    ├── App.vue          # 根组件
+    └── main.js          # 入口文件
+```
+
+### 后台管理系统 (vue-music-manage)
+
+```
+vue-music-manage
+├── public/              # 静态资源
+└── src/
+    ├── api/             # 前端数据请求接口
+    │   ├── affiliation/ # 歌单-歌手关联
+    │   ├── consumer/    # 用户
+    │   ├── infopage/    # 首页
+    │   ├── singer/      # 歌手
+    │   ├── song/        # 歌曲
+    │   └── song-list/   # 歌单
+    ├── assets/          # 静态资源目录
+    │   ├── css/         # CSS样式文件
+    │   ├── img/         # 图片资源
+    │   └── js/          # JavaScript文件
+    ├── components/      # Vue组件
+    │   └── common/      # 公共组件
+    ├── mixins/          # 混入
+    ├── pages/           # 路由组件
+    ├── plugins/         # 插件
+    ├── router/          # 路由
+    ├── store/           # 状态管理
+    ├── utils/           # 工具类
+    ├── App.vue          # 根组件
+    └── main.js          # 入口文件
+```
+
+### 后端服务 (vue-music-project)
+
+```
+vue-music-project
+├── img/                 # 上传的图片
+│   ├── consumer-img/    # 用户图片
+│   ├── singer-img/      # 歌手图片
+│   ├── song-img/        # 歌曲封面
+│   └── song-list-img/   # 歌单封面
+├── song/                # 上传的歌曲
+└── src/
+    └── main/
+        ├── java/
+        │   └── top/
+        │       └── zetiny/
+        │           └── vuemusicproject/
+        │               ├── bean/        # 实体类
+        │               ├── config/      # 配置类
+        │               ├── controller/  # 控制器
+        │               ├── dao/         # 数据访问层
+        │               ├── service/     # 服务层
+        │               │   └── impl/    # 服务实现类
+        │               └── utils/       # 工具类
+        └── resources/
+            ├── mapper/                  # MyBatis映射文件
+            ├── static/                  # 静态资源
+            └── templates/               # 模板文件
+```
+
+## 核心模块说明
+
+### 1. 播放器模块
+
+封装了播放器组件及播放条组件，实现了音乐播放的核心功能：
+- 播放/暂停控制
+- 前/后切换
+- 循环播放
+- 歌曲封面显示
+- 音量滑动控制
+- 播放进度选择
+- 播放列表管理
+- 收藏到歌单
+
+### 2. 用户模块
+
+- 用户注册/登录
+- 个人信息管理
+- 我的音乐管理
+- 我的歌单管理
+
+### 3. 歌手模块
+
+- 歌手分类浏览
+- 歌手详情查看
+- 歌手歌曲列表
+
+### 4. 歌单模块
+
+- 歌单浏览
+- 歌单详情
+- 歌单收藏
+- 创建个人歌单
+
+### 5. 后台管理模块
+
+- 用户管理
+- 歌手管理
+- 歌曲管理
+- 歌单管理
+
+## 项目启动步骤
+
+### 1. 环境准备
+
+#### 必需环境
+- Node.js 16+ (推荐使用 v16.20.0)
+- Java JDK 8+ (推荐使用 JDK 8)
+- Maven 3.6+
+- MySQL 5.7+
+
+#### 开发工具
+- IDE：推荐使用 IntelliJ IDEA 或 VS Code
+- 数据库工具：推荐使用 Navicat 或 MySQL Workbench
+- Git：用于版本控制
+
+### 2. 数据库配置
+
+1. 创建数据库：
+```sql
+CREATE DATABASE vue2_music DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+```
+
+2. 导入数据：
+```bash
+# 使用命令行导入
+mysql -u username -p vue2_music < vue2_music.sql
+
+# 或使用图形化工具（如Navicat）导入vue2_music.sql文件
+```
+
+### 3. 后端服务启动
+
+1. 配置数据库连接：
+   - 打开 `vue-music-project/src/main/resources/application.yml`
+   - 修改数据库连接信息：
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/vue2_music?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: your_username
+    password: your_password
+```
+
+2. 启动Spring Boot应用：
+```bash
+# 进入后端项目目录
+cd vue-music-project
+
+# 使用Maven打包
+mvn clean package
+
+# 运行应用（开发环境）
+mvn spring-boot:run
+
+# 或运行打包后的jar（生产环境）
+java -jar target/vue-music-project-0.0.1-SNAPSHOT.jar
+```
+
+### 4. 前台客户端启动
+
+1. 安装依赖：
+```bash
+# 进入前台客户端目录
+cd vue-music-client
+
+# 安装依赖
+npm install
+```
+
+2. 配置后端接口地址：
+   - 打开 `vue-music-client/src/api/config.js`
+   - 修改 API 基础URL（如果需要）：
+```javascript
+export const BASE_URL = 'http://localhost:8080';
+```
+
+3. 启动开发服务器：
+```bash
+# 开发环境
+npm run serve
+
+# 生产环境构建
+npm run build
+```
+
+### 5. 后台管理系统启动
+
+1. 安装依赖：
+```bash
+# 进入后台管理系统目录
+cd vue-music-manage
+
+# 安装依赖
+npm install
+```
+
+2. 配置后端接口地址：
+   - 打开 `vue-music-manage/src/api/config.js`
+   - 修改 API 基础URL（如果需要）：
+```javascript
+export const BASE_URL = 'http://localhost:8080';
+```
+
+3. 启动开发服务器：
+```bash
+# 开发环境
+npm run serve
+
+# 生产环境构建
+npm run build
+```
+
+### 6. 访问项目
+
+- 前台客户端：http://localhost:8081
+- 后台管理系统：http://localhost:8082
+- 后端API服务：http://localhost:8080
+
+### 7. 常见问题处理
+
+1. 端口占用问题：
+   - 前端项目可在 `vue.config.js` 中修改端口
+   - 后端项目可在 `application.yml` 中修改端口
+
+2. 跨域问题：
+   - 后端已配置跨域支持
+   - 如需修改，请查看 `vue-music-project/src/main/java/top/zetiny/vuemusicproject/config/WebMvcConfig.java`
+
+3. 文件上传问题：
+   - 确保 `vue-music-project/img` 和 `vue-music-project/song` 目录存在且有写入权限
+   - 可在 `application.yml` 中修改文件上传配置
 
 ## 项目展示
 
 ### 网站前台
 
 #### 首页
-
-![image-20230306113243039](README.assets/image-20230306113243039.png)
+![首页](README.assets/image-20230306113243039.png)
 
 #### 检索所有歌手
-
-![image-20230306125551940](README.assets/image-20230306125551940.png)
-
-
+![检索所有歌手](README.assets/image-20230306125551940.png)
 
 #### 检索所有歌单
-
-![image-20230306113326730](README.assets/image-20230306113326730.png)
-
-
+![检索所有歌单](README.assets/image-20230306113326730.png)
 
 #### 歌单详情页
-
-![image-20230306113341030](README.assets/image-20230306113341030.png)
-
-
+![歌单详情页](README.assets/image-20230306113341030.png)
 
 #### 未登录-我的音乐
-
-![9](README.assets/9.png)
+![未登录-我的音乐](README.assets/9.png)
 
 #### 已登录-我的音乐
+![已登录-我的音乐](README.assets/image-20230306113837014.png)
 
-![image-20230306113837014](README.assets/image-20230306113837014.png)
-
-
-
-####播放列表
-
-![image-20230306113201662](README.assets/image-20230306113201662.png)
-
+#### 播放列表
+![播放列表](README.assets/image-20230306113201662.png)
 
 ### 网站后台
+
 #### 后台登录
-
-![1](README.assets/1.png)
-
-
+![后台登录](README.assets/1.png)
 
 #### 用户管理
-
-![image-20230306114207933](README.assets/image-20230306114207933.png)
-
-
+![用户管理](README.assets/image-20230306114207933.png)
 
 #### 歌手管理
-
-![2](README.assets/2.png)
-
-
+![歌手管理](README.assets/2.png)
 
 #### 歌手-歌曲管理
-
-![3](README.assets/3.png)
-
-
+![歌手-歌曲管理](README.assets/3.png)
 
 #### 歌单管理
-
-![4](README.assets/4.png)
-
-
+![歌单管理](README.assets/4.png)
 
 #### 歌单-歌曲管理
-
-![5](README.assets/5.png)
-
-
+![歌单-歌曲管理](README.assets/5.png)
 
 ## 环境依赖
 
-### 前端
+### 前端依赖
 
-```text
-###环境依赖###
+```
 ├── @babel/core@7.20.7
 ├── @babel/eslint-parser@7.19.1
 ├── @vue/cli-plugin-babel@5.0.8
@@ -126,138 +385,18 @@
 └── vuex@3.6.2
 ```
 
-### 后端
+### 后端依赖
 
-见`pom.xml`
+详见项目中的`pom.xml`文件
 
+## 开发与贡献
 
+欢迎提交问题和功能请求。如果您想贡献代码，请遵循以下步骤：
 
-## 部署步骤
-
-1. 克隆
-
-```sh
-git clone https://gitee.com/zetiny/vue2-music.git
-```
-
-2. 安装前端所需依赖 `npm install`
-
-3. 启动前端服务 `npm run serve`
-4. 执行SQL脚本 vue_spring.sql
-
-4. 修改后端配置文件 `application-dev.yaml`
-
-​		数据库名、端口号、用户名、密码
-
-5. 使用maven引入依赖
-6. 启动项目
-
-
-
-## 目录结构
-
-### vue-music-project 后端
-
-```text
-### vue-music-manage
-├─.idea
-├─.mvn
-├─img //上传的图片
-│  ├─consumer-img //用户图片
-│  ├─singer-img //歌手图片
-│  ├─song-img //歌曲封面
-│  └─song-list-img //歌单封面
-├─song //上传的歌曲
-├─src
-│  ├─main
-│  │  ├─java
-│  │  │  └─top
-│  │  │      └─zetiny
-│  │  │          └─vuemusicproject
-│  │  │              ├─bean //属性类
-│  │  │              ├─config //配置类
-│  │  │              ├─controller //业务
-│  │  │              ├─dao //持久化
-│  │  │              ├─enums //枚举类，未使用
-│  │  │              ├─service //服务实现类及其接口
-│  │  │              │  └─impl 
-│  │  │              └─utils //工具类
-│  │  └─resources
-│  │      ├─mapper //MyBatis映射文件
-│  │      ├─static //静态资源
-│  │      │  ├─css
-│  │      │  └─img
-│  │      │      └─singer-img
-│  │      └─templates
-│  └─test
-└─target
-```
-
-
-
-### vue-music-manage 网站后台
-
-```text
-### vue-music-manage
-├─node_modules
-├─public
-└─src
-    ├─api //前端数据请求接口
-    │  ├─affiliation //歌单-歌手关
-    │  ├─consumer //用户
-    │  ├─infopage //首页
-    │  ├─singer //歌手
-    │  ├─song //歌曲
-    │  └─song-list //歌单
-    ├─assets //静态资源目录
-    │  ├─css
-    │  ├─img
-    │  └─js
-    ├─components //Vue组件
-    │  └─common //公共组件
-    ├─mixins //混入
-    ├─pages //路由组件
-    ├─plugins //插件
-    ├─router //路由
-    ├─store //状态管理
-    └─utils //工具类
-```
-
-
-
-### vue-music-client 网站前台
-
-```text
-### vue-music-manage
-├─node_modules
-├─public
-└─src
-    ├─api //前端数据请求接口
-    ├─assets  //静态资源目录
-    │  ├─img
-    │  ├─js
-    │  │  └─data
-    │  └─scss 
-    ├─components //Vue组件
-    │  ├─common //公共组件
-    │  └─search //搜索组件
-    ├─mixins //混入
-    ├─pages  //路由组件
-    ├─router //路由
-    ├─store //状态管理
-    └─utils //工具类
-```
-
-
-
-## **许可证**
-
-Licensed under the  [Apache License](http://www.apache.org/licenses/), Version 2.0, January 2004. 
-
-
-
-## 其他
+1. Fork 项目
+2. 创建您的特性分支 (`git checkout -b feature/amazing-feature`)
+3. 提交您的更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 打开一个 Pull Request
 
 Happy Coding Everyday!
-
-Email: 2463270717@qq.com

@@ -54,10 +54,13 @@ export const mixin = {
          * @param {Response} res 
          * @param {File} file 
          */
-        handleAvatarSuccess(res, file) {
+        async handleAvatarSuccess(res, file) {
             let _this = this
             if (res.code == 1) {
-                _this.getTableData()
+                const currentPage = _this.currentPage
+                await _this.getTableData()
+                // 直接设置currentPage，不依赖于$nextTick
+                _this.currentPage = currentPage
                 _this.$message({
                     message: res.msg,
                     type: 'success',
