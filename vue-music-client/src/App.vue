@@ -56,7 +56,19 @@ body {
 }
 
 body {
-    font-family:  '思源黑体 CN','Flyme','Courier New', Courier, monospace,'楷体';
+    font-family: 'Montserrat', 'Noto Sans SC', 'Source Han Sans CN', '思源黑体 CN', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+// 添加自定义字体类
+.app-title {
+    font-family: 'Poppins', 'Noto Sans SC', 'Source Han Sans CN', '思源黑体 CN', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+}
+
+.app-subtitle {
+    font-family: 'Open Sans', 'Noto Sans SC', 'Source Han Sans CN', '思源黑体 CN', sans-serif;
+    font-weight: 400;
 }
 
 ul,

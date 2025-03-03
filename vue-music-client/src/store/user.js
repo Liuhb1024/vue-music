@@ -1,19 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { setUserInfo, getUserInfo, setLoginStatus, getLoginStatus } from '@/utils/storage';
 
 Vue.use(Vuex)
 
 const getters = {
-    loginStatus(state) {
-        return state.isLogged || JSON.parse(sessionStorage.getItem('userLoginStatus'))
-    },
-    userInfo(state) {
-        let res = state.user
-        if (!res) {
-            res = JSON.parse(sessionStorage.getItem('userInfo'))
-        }
-        return res
-    },
+    loginStatus: state => state.loginStatus,
+    userInfo: state => state.userInfo
 }
 
 const actions = {
@@ -22,21 +15,22 @@ const actions = {
 
 const mutations = {
     SET_LOGIN_STATUS(state, status) {
-        state.isLogged = status
-        sessionStorage.setItem('userLoginStatus', JSON.stringify(status))
+        state.loginStatus = status;
+        setLoginStatus(status);
     },
-    SET_USER_INFO(state, user) {
-        state.user = user
-        sessionStorage.setItem('userInfo', JSON.stringify(user))
+    SET_USER_INFO(state, userInfo) {
+        state.userInfo = userInfo;
+        setUserInfo(userInfo);
     }
 }
 
 const state = {
-    isLogged: false,
-    user: {},
+    loginStatus: getLoginStatus(),
+    userInfo: getUserInfo() || {}
 }
 
 const user = {
+    namespaced: true,
     state,
     getters,
     actions,

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import UserSettings from '@/pages/UserSettings.vue'
 
 Vue.use(VueRouter)
 
@@ -37,8 +38,11 @@ const routes = [{
     component: () => import('@/pages/SignUp.vue')
   },{
   path: '/setting',
-  name: 'setting',
-  component: () => import('@/pages/UserSetting.vue')
+  name: 'UserSettings',
+  component: UserSettings,
+  meta: {
+    title: '个人设置'
+  }
 },{
   path: '/singer-album',
   name: 'singerAlbum',

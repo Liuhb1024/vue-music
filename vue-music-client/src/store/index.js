@@ -13,11 +13,13 @@ const getters = {
             str = JSON.parse(sessionStorage.getItem('activeNav'))
         }
         return str
+    },
+    loginStatus: (state, getters) => {
+        return getters['user/loginStatus']
+    },
+    userInfo: (state, getters) => {
+        return getters['user/userInfo']
     }
-}
-
-const actions = {
-
 }
 
 const mutations = {
@@ -34,7 +36,6 @@ const state = {
 const store = new Vuex.Store({
     state,
     getters,
-    actions,
     mutations,
     modules: {
         config,

@@ -1,12 +1,56 @@
 <template>
-<div class="home">
-    <section class="section-wrapper" v-for="(item, index) in songInfo" :key="index">
-        <div class="section-title">{{ item.name }}</div>
-        <div class="text-more">
-            <span @click="handleSeekForMoreResults(item.path)">更多&nbsp;&nbsp;<i class="fa fa-angle-right"></i></span>
+<div class="home-page">
+    <div class="page-header">
+        <div class="wave-animation">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
         </div>
-        <ContentList :infoList="item.list"></ContentList>
-    </section>
+        <div class="welcome-text">
+            <h1>探索音乐的世界</h1>
+            <p>发现、聆听、分享</p>
+        </div>
+    </div>
+    
+    <div class="home-container">
+        <section class="section-wrapper" v-for="(item, index) in songInfo" :key="index">
+            <div class="section-header">
+                <div class="section-title">
+                    <i :class="getIconClass(item.name)"></i>
+                    <h2>{{ item.name }}</h2>
+                </div>
+                <div class="text-more">
+                    <el-button type="primary" size="small" round @click="handleSeekForMoreResults(item.path)">
+                        查看更多 <i class="el-icon-arrow-right"></i>
+                    </el-button>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <ContentList :infoList="item.list"></ContentList>
+            </div>
+        </section>
+    </div>
+    
+    <BackToTop />
+
+    <!-- 左侧装饰面板 -->
+    <div class="left-panel">
+        <div class="music-decor">
+            <span class="note">♪</span>
+            <span class="note">♫</span>
+            <span class="note">♩</span>
+        </div>
+    </div>
+
+    <!-- 右侧装饰面板 -->
+    <div class="right-panel">
+        <div class="wave-bars">
+            <div class="bar" v-for="n in 12" :key="n"></div>
+        </div>
+        <div class="circles">
+            <div class="circle" v-for="n in 3" :key="n"></div>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -19,11 +63,13 @@ import {
 } from '@/api/index'
 
 import ContentList from '@/components/common/ContentList.vue'
+import BackToTop from '@/components/common/BackToTop.vue'
 
 export default {
     name: 'Home',
     components: {
-        ContentList
+        ContentList,
+        BackToTop
     },
     data() {
         return {
@@ -52,6 +98,9 @@ export default {
         },
         handleSeekForMoreResults(path) {
             this.$router.push(path)
+        },
+        getIconClass(name) {
+            return name.includes('歌单') ? 'el-icon-headset' : 'el-icon-user'
         }
     }
 }
@@ -60,26 +109,552 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/effects';
 
-.home {
-    .section-wrapper {
-        min-height: 300px;
+.home-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #2d3a4b;
+    padding-bottom: 80px;
+    position: relative;
+    overflow-x: hidden;
 
-        .section-title {
-            font-size: 2em;
-            text-align: center;
+    // 左侧装饰面板
+    .left-panel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(to right, rgba(32, 40, 51, 0.95), rgba(32, 40, 51, 0.2));
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
 
-        }
+        // 音乐元素装饰
+        .music-decor {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            margin-top: 100px;
 
-        .text-more {
-            text-align: right;
+            // CD 唱片效果
+            &::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 20%;
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                background: 
+                    radial-gradient(circle at center, 
+                        rgba(255, 255, 255, 0.1) 0%,
+                        rgba(255, 255, 255, 0.05) 40%,
+                        transparent 60%
+                    );
+                border: 2px solid rgba(103, 195, 255, 0.1);
+                transform: translateX(-50%);
+                animation: rotate 20s linear infinite;
+            }
 
-            span {
-                display: inline-block;
-                margin-right: 90px;
-                &:hover {
-                    @include button-hover;
+            // 音符动画
+            .note {
+                position: absolute;
+                font-size: 24px;
+                color: rgba(103, 195, 255, 0.15);
+                animation: float 3s ease-in-out infinite;
+
+                &:nth-child(1) {
+                    left: 20%;
+                    top: 40%;
+                    animation-delay: 0s;
+                }
+
+                &:nth-child(2) {
+                    left: 60%;
+                    top: 30%;
+                    animation-delay: 0.5s;
+                }
+
+                &:nth-child(3) {
+                    left: 40%;
+                    top: 60%;
+                    animation-delay: 1s;
                 }
             }
+        }
+    }
+
+    // 右侧装饰面板
+    .right-panel {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 280px;
+        height: 100vh;
+        background: linear-gradient(to left, rgba(32, 40, 51, 0.95), rgba(32, 40, 51, 0.2));
+        z-index: 1;
+        overflow: hidden;
+
+        // 波形动画
+        .wave-bars {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 4px;
+            padding: 20px;
+
+            .bar {
+                width: 3px;
+                height: 20px;
+                background: rgba(103, 195, 255, 0.2);
+                border-radius: 3px;
+                animation: waveBar 1.5s ease-in-out infinite;
+
+                @for $i from 1 through 12 {
+                    &:nth-child(#{$i}) {
+                        animation-delay: $i * 0.1s;
+                    }
+                }
+            }
+        }
+
+        // 圆环装饰
+        .circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            .circle {
+                position: absolute;
+                border-radius: 50%;
+                border: 1px solid rgba(103, 195, 255, 0.1);
+                animation: pulse 4s ease-in-out infinite;
+
+                &:nth-child(1) {
+                    width: 100px;
+                    height: 100px;
+                    top: 20%;
+                    right: 40px;
+                }
+
+                &:nth-child(2) {
+                    width: 60px;
+                    height: 60px;
+                    top: 40%;
+                    right: 80px;
+                    animation-delay: 1s;
+                }
+
+                &:nth-child(3) {
+                    width: 40px;
+                    height: 40px;
+                    top: 60%;
+                    right: 60px;
+                    animation-delay: 2s;
+                }
+            }
+        }
+    }
+
+    .page-header {
+        position: relative;
+        height: 280px;
+        width: 100%;
+        overflow: hidden;
+        
+        .wave-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            
+            .wave {
+                position: absolute;
+                width: 200%;
+                height: 100%;
+                background-repeat: repeat-x;
+                background-position: 0 bottom;
+                transform-origin: center bottom;
+
+                &.wave1 {
+                    bottom: 0;
+                    opacity: 0.5;
+                    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23409EFF" fill-opacity="0.35" d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,186.7C672,203,768,181,864,170.7C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+                    animation: wave 18s linear infinite;
+                }
+                
+                &.wave2 {
+                    bottom: -10px;
+                    opacity: 0.3;
+                    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2367C3FF" fill-opacity="0.35" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,117.3C960,128,1056,128,1152,122.7C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+                    animation: wave 15s linear infinite;
+                }
+                
+                &.wave3 {
+                    bottom: -20px;
+                    opacity: 0.2;
+                    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23FFFFFF" fill-opacity="0.35" d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,101.3C672,85,768,107,864,128C960,149,1056,171,1152,165.3C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+                    animation: wave 12s linear infinite;
+                }
+            }
+        }
+
+        .welcome-text {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding-top: 80px;
+            
+            h1 {
+                color: #ffffff;
+                font-size: 42px;
+                font-weight: 600;
+                margin-bottom: 15px;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                animation: fadeInDown 0.8s ease-out;
+            }
+            
+            p {
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 18px;
+                text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+                animation: fadeInUp 0.8s ease-out 0.2s both;
+            }
+        }
+    }
+    
+    .home-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 20px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 5;
+        box-sizing: border-box;
+        
+        .section-wrapper {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-sizing: border-box;
+            
+            &:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                background: rgba(255, 255, 255, 0.08);
+            }
+            
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 25px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding-bottom: 15px;
+                
+                .section-title {
+                    display: flex;
+                    align-items: center;
+                    
+                    i {
+                        font-size: 28px;
+                        color: #67c3ff;
+                        margin-right: 12px;
+                        background: rgba(64, 158, 255, 0.1);
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 0 15px rgba(103, 195, 255, 0.3);
+                    }
+                    
+                    h2 {
+                        font-size: 22px;
+                        color: #ffffff;
+                        margin: 0;
+                        font-weight: 600;
+                        letter-spacing: 1px;
+                        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+                    }
+                }
+                
+                .text-more {
+                    .el-button {
+                        border-radius: 20px;
+                        padding: 10px 20px;
+                        font-weight: 500;
+                        letter-spacing: 0.5px;
+                        box-shadow: 0 3px 10px rgba(64, 158, 255, 0.3);
+                        
+                        &:hover {
+                            transform: translateX(5px);
+                            box-shadow: 0 5px 15px rgba(64, 158, 255, 0.5);
+                        }
+                        
+                        i {
+                            margin-left: 5px;
+                            font-weight: bold;
+                            transition: transform 0.3s;
+                        }
+                        
+                        &:hover i {
+                            transform: translateX(3px);
+                        }
+                    }
+                }
+            }
+            
+            .content-wrapper {
+                min-height: 280px;
+                width: 100%;
+                overflow: hidden;
+                
+                :deep(.el-card) {
+                    background: rgba(255, 255, 255, 0.15);
+                    border: none;
+                    backdrop-filter: blur(5px);
+                    
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.25);
+                    }
+                    
+                    .el-card__body {
+                        color: #fff;
+                    }
+                }
+                
+                :deep(.el-row) {
+                    width: 100%;
+                    margin: 0 !important;
+                }
+                
+                :deep(.el-col) {
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(-10deg);
+    }
+    50% {
+        transform: translateY(-15px) rotate(10deg);
+    }
+}
+
+@keyframes waveBar {
+    0%, 100% {
+        height: 20px;
+    }
+    50% {
+        height: 40px;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0) scaleY(1);
+    }
+    50% {
+        transform: translateX(-25%) scaleY(1.1);
+    }
+    100% {
+        transform: translateX(-50%) scaleY(1);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// 媒体查询部分保持不变，但增加一些针对大屏幕的优化
+
+// 大屏幕设备优化
+@media screen and (min-width: 1600px) {
+    .home-page {
+        .home-container {
+            padding: 0 5%;
+            
+            .section-wrapper {
+                .content-wrapper {
+                    :deep(.el-col-md-2) {
+                        width: 16.66667%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 超大屏幕
+@media screen and (min-width: 2000px) {
+    .home-page {
+        .home-container {
+            padding: 0 8%;
+        }
+    }
+}
+
+// 响应式布局
+@media screen and (max-width: 992px) {
+    .home-page {
+        .page-header {
+            height: 200px;
+            
+            .welcome-text {
+                h1 {
+                    font-size: 30px;
+                }
+                
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+        
+        .home-container {
+            padding: 15px;
+            
+            .section-wrapper {
+                padding: 20px;
+                
+                .section-header {
+                    .section-title {
+                        i {
+                            font-size: 24px;
+                            width: 40px;
+                            height: 40px;
+                        }
+                        
+                        h2 {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .home-page {
+        .page-header {
+            height: 180px;
+            
+            .welcome-text {
+                h1 {
+                    font-size: 24px;
+                }
+                
+                p {
+                    font-size: 14px;
+                }
+            }
+        }
+        
+        .home-container {
+            padding: 10px;
+            
+            .section-wrapper {
+                padding: 15px;
+                margin-bottom: 25px;
+                
+                .section-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    
+                    .section-title {
+                        margin-bottom: 15px;
+                    }
+                    
+                    .text-more {
+                        align-self: flex-end;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .back-to-top {
+        right: 20px;
+        bottom: 90px;
+        width: 36px;
+        height: 36px;
+
+        i {
+            font-size: 18px;
+        }
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .home-page {
+        &::before, &::after {
+            width: 200px;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .home-page {
+        &::before, &::after {
+            display: none;
         }
     }
 }

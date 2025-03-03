@@ -151,13 +151,13 @@ export default {
                         this.loading = false;
                         if (responseBody.code === 1) {
                             this.$message({
-                                message: '注册成功,三秒后跳转到首页',
+                                message: '注册成功,三秒后跳转到登录页',
                                 type: 'success',
                                 duration: 3000
                             })
                             setTimeout(() => {
                                 this.$store.commit('SET_LOGIN_STATUS', true)
-                                this.$router.push('/home')
+                                this.$router.push('/login')
                             }, 3000)
                         } else {
                             this.$message({

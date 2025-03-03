@@ -57,13 +57,16 @@ export default {
         ...mapGetters(['audioId', 'isShowSongPlaylist', 'cachedSongs', 'cachedPlaylist', 'audioPlayingState'])
     },
     mounted() {
-        //设置当点击页面中的任何地方时关闭播放列表（除点击播放列表以外）
+        // 将播放列表元素移动到body下直接挂载
+        document.body.appendChild(this.$refs['playlist-wrapper']);
+        this.$refs['playlist-wrapper'].classList.add('top-layer');
+        
+        // 原有的事件监听代码保持不变
         let _this = this
         document.addEventListener('click', function () {
             _this.$store.commit('SET_IS_SHOW_SONG_PLAYLIST', false)
         }, false)
 
-        //阻止冒泡，设置点击播放列表容器时，不关闭该容器
         this.$refs['playlist-wrapper'].addEventListener('click', function ($event) {
             $event.stopPropagation()
         })
@@ -115,7 +118,7 @@ export default {
     background-color: rgb(255, 255, 255);
     border-radius: 4px;
     @include normal-border-style(2px, solid, $theme-color);
-    @include z-index-middle;
+    z-index: 10000 !important;
 
     .play-control {
         .tool-bar {

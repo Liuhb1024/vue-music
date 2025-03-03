@@ -184,28 +184,31 @@ export default {
     min-width: 100vw;
     height: $play-bar-wrapper-bottom-position;
     box-sizing: border-box;
-    box-shadow: 0 -2px 3px 0 $theme-color;
-    background-color: white;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    background: rgba(35, 45, 58, 0.98);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     position: fixed;
-    @include z-index-lower;
+    z-index: 1000;
     bottom: 0;
     display: flex;
     justify-content: center;
-    transition: all 1s;
+    transition: all 0.3s ease;
 
     .chevron-box {
         line-height: 32px;
         position: absolute;
         right: 48%;
         bottom: 75px;
-        color: rgb(122, 172, 236);
+        color: #ffffff;
         font-size: 2em;
+        transition: all 0.3s ease;
 
         span:hover {
             cursor: pointer;
             vertical-align: middle;
-        color: $theme-color;
-
+            color: #4a90e2;
+            transform: scale(1.1);
         }
     }
 
@@ -224,31 +227,29 @@ export default {
             margin-right: 10px;
             text-align: center;
             line-height: 70px;
-            color: rgb(92, 162, 219);
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
 
             i:hover {
-                @include button-hover;
+                color: #67c3ff;
+                transform: scale(1.15);
+                text-shadow: 0 0 15px rgba(103, 195, 255, 0.6);
             }
 
             img {
                 display: block;
                 width: 50px;
                 height: 50px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                border: 2px solid rgba(255, 255, 255, 0.1);
+                transition: transform 0.3s ease;
 
-                &::before {
-                    background-color: #eeeeee;
-                    border: #aaaaaa;
-                    display: block;
-                    height: 100%;
-                    content: attr(alt);
-                    text-align: center;
+                &:hover {
+                    transform: scale(1.08);
+                    border-color: #409EFF;
                 }
-            }
-        }
-
-        >div {
-            &:nth-of-type(2) {
-                font-size: 30px;
             }
         }
     }
@@ -259,18 +260,26 @@ export default {
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: flex-start;
+        padding: 0 20px;
 
         .title-box {
             width: 50%;
             min-height: 25px;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
         }
 
         .current-time {
             width: 40%;
             text-align: right;
+            color: #ffffff;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 
             span:nth-of-type(2) {
-                color: rgb(121, 119, 119);
+                color: rgba(255, 255, 255, 0.9);
             }
         }
 
@@ -284,6 +293,16 @@ export default {
                 width: 100%;
                 margin: auto 0;
                 cursor: pointer;
+
+                /deep/ .el-progress-bar__outer {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: 4px;
+                }
+
+                /deep/ .el-progress-bar__inner {
+                    background: linear-gradient(to right, #4a90e2, #67b0ff);
+                    transition: width 0.3s ease;
+                }
             }
         }
     }
@@ -297,23 +316,44 @@ export default {
         span {
             i {
                 font-size: 25px;
+                color: #ffffff;
+                transition: all 0.3s ease;
+
                 &:hover {
-                    @include button-hover;
+                    color: #4a90e2;
+                    transform: scale(1.1);
                     cursor: pointer;
                 }
             }
-            @include button-link;
         }
 
         .el-slider {
             margin: 0 20px 0 15px;
             width: 100%;
+
+            /deep/ .el-slider__runway {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /deep/ .el-slider__bar {
+                background: linear-gradient(to right, #4a90e2, #67b0ff);
+            }
+
+            /deep/ .el-slider__button {
+                border: 2px solid #4a90e2;
+                background-color: #ffffff;
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
         }
     }
 }
 
 .play-bar-wrapper-display {
     bottom: -$play-bar-wrapper-bottom-position;
-    background-color: $theme-color;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
 }
 </style>
