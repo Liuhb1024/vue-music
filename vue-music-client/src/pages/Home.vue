@@ -117,43 +117,51 @@ export default {
     position: relative;
     overflow-x: hidden;
 
-    // 左侧装饰面板
     .left-panel {
         position: fixed;
         left: 0;
         top: 0;
-        width: 280px;
-        height: 100vh;
-        background: linear-gradient(to right, rgba(32, 40, 51, 0.95), rgba(32, 40, 51, 0.2));
-        z-index: 1;
+        width: 450px;
+        height: 100%;
+        background: linear-gradient(to right,
+            rgba(32, 40, 51, 1) 0%,
+            rgba(32, 40, 51, 1) 15%,
+            rgba(45, 58, 75, 0.95) 30%,
+            rgba(45, 58, 75, 0.6) 60%,
+            rgba(45, 58, 75, 0) 100%
+        );
+        z-index: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 40px 20px;
+        padding: 40px;
 
         // 音乐元素装饰
         .music-decor {
             width: 100%;
-            height: 400px;
+            height: 100%;
             position: relative;
-            margin-top: 100px;
 
             // CD 唱片效果
             &::before {
                 content: '';
                 position: absolute;
-                left: 50%;
-                top: 20%;
-                width: 120px;
-                height: 120px;
+                left: 35%;
+                top: 25%;
+                width: 180px;
+                height: 180px;
                 border-radius: 50%;
                 background: 
                     radial-gradient(circle at center, 
-                        rgba(255, 255, 255, 0.1) 0%,
-                        rgba(255, 255, 255, 0.05) 40%,
-                        transparent 60%
+                        rgba(255, 255, 255, 0.3) 0%,
+                        rgba(255, 255, 255, 0.2) 30%,
+                        rgba(255, 255, 255, 0.15) 60%,
+                        transparent 80%
                     );
-                border: 2px solid rgba(103, 195, 255, 0.1);
+                border: 4px solid rgba(103, 195, 255, 0.5);
+                box-shadow: 
+                    0 0 40px rgba(103, 195, 255, 0.4),
+                    inset 0 0 40px rgba(103, 195, 255, 0.4);
                 transform: translateX(-50%);
                 animation: rotate 20s linear infinite;
             }
@@ -161,41 +169,51 @@ export default {
             // 音符动画
             .note {
                 position: absolute;
-                font-size: 24px;
-                color: rgba(103, 195, 255, 0.15);
+                font-size: 45px;
+                color: rgba(103, 195, 255, 0.8);
+                text-shadow: 
+                    0 0 20px rgba(103, 195, 255, 0.6),
+                    0 0 40px rgba(103, 195, 255, 0.4);
                 animation: float 3s ease-in-out infinite;
+                z-index: 2;
 
                 &:nth-child(1) {
                     left: 20%;
-                    top: 40%;
-                    animation-delay: 0s;
+                    top: 15%;
+                    font-size: 50px;
                 }
 
                 &:nth-child(2) {
-                    left: 60%;
-                    top: 30%;
+                    left: 70%;
+                    top: 40%;
+                    font-size: 55px;
                     animation-delay: 0.5s;
                 }
 
                 &:nth-child(3) {
-                    left: 40%;
-                    top: 60%;
+                    left: 30%;
+                    top: 65%;
+                    font-size: 48px;
                     animation-delay: 1s;
                 }
             }
         }
     }
 
-    // 右侧装饰面板
     .right-panel {
         position: fixed;
         right: 0;
         top: 0;
-        width: 280px;
-        height: 100vh;
-        background: linear-gradient(to left, rgba(32, 40, 51, 0.95), rgba(32, 40, 51, 0.2));
-        z-index: 1;
-        overflow: hidden;
+        width: 450px;
+        height: 100%;
+        background: linear-gradient(to left,
+            rgba(32, 40, 51, 1) 0%,
+            rgba(32, 40, 51, 1) 15%,
+            rgba(45, 58, 75, 0.95) 30%,
+            rgba(45, 58, 75, 0.6) 60%,
+            rgba(45, 58, 75, 0) 100%
+        );
+        z-index: 0;
 
         // 波形动画
         .wave-bars {
@@ -204,19 +222,25 @@ export default {
             left: 50%;
             transform: translate(-50%, -50%);
             display: flex;
-            gap: 4px;
-            padding: 20px;
+            gap: 8px;
+            padding: 40px;
 
             .bar {
-                width: 3px;
-                height: 20px;
-                background: rgba(103, 195, 255, 0.2);
-                border-radius: 3px;
+                width: 5px;
+                height: 40px;
+                background: linear-gradient(to bottom,
+                    rgba(103, 195, 255, 1) 0%,
+                    rgba(103, 195, 255, 0.4) 100%
+                );
+                border-radius: 4px;
                 animation: waveBar 1.5s ease-in-out infinite;
+                box-shadow: 
+                    0 0 20px rgba(103, 195, 255, 0.4),
+                    0 0 40px rgba(103, 195, 255, 0.2);
 
                 @for $i from 1 through 12 {
                     &:nth-child(#{$i}) {
-                        animation-delay: $i * 0.1s;
+                        animation-delay: #{$i * 0.1}s;
                     }
                 }
             }
@@ -224,40 +248,24 @@ export default {
 
         // 圆环装饰
         .circles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-
             .circle {
-                position: absolute;
-                border-radius: 50%;
-                border: 1px solid rgba(103, 195, 255, 0.1);
-                animation: pulse 4s ease-in-out infinite;
-
-                &:nth-child(1) {
-                    width: 100px;
-                    height: 100px;
-                    top: 20%;
-                    right: 40px;
-                }
-
-                &:nth-child(2) {
-                    width: 60px;
-                    height: 60px;
-                    top: 40%;
-                    right: 80px;
-                    animation-delay: 1s;
-                }
-
-                &:nth-child(3) {
-                    width: 40px;
-                    height: 40px;
-                    top: 60%;
-                    right: 60px;
-                    animation-delay: 2s;
-                }
+                border: 3px solid rgba(103, 195, 255, 0.5);
+                box-shadow: 
+                    0 0 40px rgba(103, 195, 255, 0.4),
+                    inset 0 0 40px rgba(103, 195, 255, 0.4);
+                background: linear-gradient(135deg,
+                    rgba(103, 195, 255, 0.15) 0%,
+                    rgba(64, 158, 255, 0.05) 100%
+                );
             }
         }
+    }
+
+    .main-content {
+        min-height: 100vh;
+        padding: 0 450px 80px;
+        position: relative;
+        z-index: 1;
     }
 
     .page-header {
@@ -329,22 +337,21 @@ export default {
     }
     
     .home-container {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 20px;
+        padding: 0 450px;
         margin: 0 auto;
+        max-width: 1920px;
         position: relative;
         z-index: 5;
         box-sizing: border-box;
         
         .section-wrapper {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            padding: 25px;
-            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             transition: all 0.4s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-sizing: border-box;
@@ -460,19 +467,23 @@ export default {
 
 @keyframes float {
     0%, 100% {
-        transform: translateY(0) rotate(-10deg);
+        transform: translateY(0) rotate(-5deg);
+        opacity: 0.8;
     }
     50% {
-        transform: translateY(-15px) rotate(10deg);
+        transform: translateY(-20px) rotate(5deg);
+        opacity: 1;
     }
 }
 
 @keyframes waveBar {
     0%, 100% {
-        height: 20px;
+        height: 40px;
+        opacity: 0.8;
     }
     50% {
-        height: 40px;
+        height: 60px;
+        opacity: 1;
     }
 }
 
@@ -550,111 +561,46 @@ export default {
 }
 
 // 响应式布局
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1800px) {
     .home-page {
-        .page-header {
-            height: 200px;
-            
-            .welcome-text {
-                h1 {
-                    font-size: 30px;
-                }
-                
-                p {
-                    font-size: 16px;
-                }
-            }
+        .left-panel, .right-panel {
+            width: 350px;
         }
-        
         .home-container {
-            padding: 15px;
-            
-            .section-wrapper {
-                padding: 20px;
-                
-                .section-header {
-                    .section-title {
-                        i {
-                            font-size: 24px;
-                            width: 40px;
-                            height: 40px;
-                        }
-                        
-                        h2 {
-                            font-size: 18px;
-                        }
-                    }
-                }
-            }
+            padding: 0 350px;
         }
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1600px) {
     .home-page {
-        .page-header {
-            height: 180px;
-            
-            .welcome-text {
-                h1 {
-                    font-size: 24px;
-                }
-                
-                p {
-                    font-size: 14px;
-                }
-            }
+        .left-panel, .right-panel {
+            width: 300px;
         }
-        
         .home-container {
-            padding: 10px;
-            
-            .section-wrapper {
-                padding: 15px;
-                margin-bottom: 25px;
-                
-                .section-header {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    
-                    .section-title {
-                        margin-bottom: 15px;
-                    }
-                    
-                    .text-more {
-                        align-self: flex-end;
-                    }
-                }
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .back-to-top {
-        right: 20px;
-        bottom: 90px;
-        width: 36px;
-        height: 36px;
-
-        i {
-            font-size: 18px;
+            padding: 0 300px;
         }
     }
 }
 
 @media screen and (max-width: 1400px) {
     .home-page {
-        &::before, &::after {
-            width: 200px;
+        .left-panel, .right-panel {
+            width: 250px;
+        }
+        .home-container {
+            padding: 0 250px;
         }
     }
 }
 
 @media screen and (max-width: 1200px) {
     .home-page {
-        &::before, &::after {
+        .left-panel, .right-panel {
             display: none;
+        }
+        .home-container {
+            padding: 0 20px;
         }
     }
 }
