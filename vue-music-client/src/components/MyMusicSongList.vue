@@ -117,17 +117,6 @@ export default {
 @import '@/assets/scss/effects';
 
 .my-music-song-list-wrapepr {
-    .left-button {
-        display: none;
-        width: 40px;
-        height: 45px;
-        background-color: rgba(255, 255, 255, 0.575);
-        position: absolute;
-        left: 0;
-        top: 0;
-        text-align: center;
-    }
-
     li {
         width: 100%;
         height: 45px;
@@ -135,21 +124,68 @@ export default {
         margin-bottom: 1px;
         line-height: 40px;
         overflow: hidden;
+        padding: 0 10px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
 
-        &:hover div {
-            display: block;
+        span {
+            color: rgba(255, 255, 255, 0.9);  // 提高文字亮度
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
         img {
             vertical-align: middle;
             width: 40px;
             height: 40px;
-            margin-right: 7px;
+            margin-right: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-button {
+            display: none;
+            width: 40px;
+            height: 45px;
+            background-color: rgba(103, 195, 255, 0.1);  // 使用主题蓝色
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
         &:hover {
-            @include button-hover;
+            background: rgba(103, 195, 255, 0.15);
+            transform: translateX(5px);
+
+            span {
+                color: #67c3ff;  // 悬浮时变为主题蓝色
+            }
+
+            div {
+                display: block;
+            }
+
+            img {
+                box-shadow: 0 4px 12px rgba(103, 195, 255, 0.3);
+            }
         }
+    }
+}
+
+// 删除按钮样式优化
+:deep(.el-button--danger) {
+    background: rgba(255, 71, 87, 0.2);
+    border: none;
+    
+    &:hover {
+        background: rgba(255, 71, 87, 0.8);
+        transform: scale(1.1);
     }
 }
 </style>

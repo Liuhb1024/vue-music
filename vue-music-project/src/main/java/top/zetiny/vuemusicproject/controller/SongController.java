@@ -11,8 +11,12 @@ import top.zetiny.vuemusicproject.service.SongService;
 import top.zetiny.vuemusicproject.utils.Consts;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -242,5 +246,41 @@ public class SongController {
             e.printStackTrace();
         }
         return objectMapper.writeValueAsString(hashMap);
+    }
+
+    @GetMapping("/download")
+    public void downloadSong(@RequestParam String url, HttpServletResponse response) {
+        try {
+            // 获取项目根路径
+            String basePath = System.getProperty("user.dir");
+            // 从 url 中提取文件名
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            // 完整的文件路径
+            String filePath = basePath + url;
+            
+            File file = new File(filePath);
+            if (!file.exists()) {
+                throw new RuntimeException("文件不存在");
+            }
+
+            // 设置响应头
+            response.setContentType("audio/mpeg");
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            
+            // 写入响应
+            try (FileInputStream fis = new FileInputStream(file);
+                 BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())) {
+                
+                byte[] buffer = new byte[1024];
+                int len;
+                while ((len = fis.read(buffer)) != -1) {
+                    bos.write(buffer, 0, len);
+                }
+                bos.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 }

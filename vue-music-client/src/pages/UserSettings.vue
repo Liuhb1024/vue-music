@@ -1,5 +1,25 @@
 <template>
 <div class="user-settings-page">
+    <!-- 左侧装饰面板 -->
+    <div class="left-panel">
+        <div class="music-decor">
+            <span class="note">♪</span>
+            <span class="note">♫</span>
+            <span class="note">♩</span>
+            <div class="cd-effect"></div>
+        </div>
+    </div>
+
+    <!-- 右侧装饰面板 -->
+    <div class="right-panel">
+        <div class="wave-bars">
+            <div class="bar" v-for="n in 12" :key="n"></div>
+        </div>
+        <div class="circles">
+            <div class="circle" v-for="n in 3" :key="n"></div>
+        </div>
+    </div>
+
     <div class="settings-container">
         <div class="settings-sidebar">
             <div class="user-info">
@@ -340,22 +360,158 @@ export default {
 
 .user-settings-page {
     min-height: calc(100vh - 60px);
-    background-color: #f5f7fa;
+    background-color: #2d3a4b;
     padding: 30px 0;
-    
+    position: relative;
+    overflow-x: hidden;
+
+    // 左侧装饰面板
+    .left-panel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 450px;
+        height: 100%;
+        background: linear-gradient(to right,
+            rgba(32, 40, 51, 1) 0%,
+            rgba(32, 40, 51, 1) 15%,
+            rgba(45, 58, 75, 0.95) 30%,
+            rgba(45, 58, 75, 0.6) 60%,
+            rgba(45, 58, 75, 0) 100%
+        );
+        z-index: 0;
+
+        .music-decor {
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+            .note {
+                position: absolute;
+                color: rgba(103, 195, 255, 0.6);
+                font-size: 2em;
+                animation: float 3s ease-in-out infinite;
+                text-shadow: 0 0 20px rgba(103, 195, 255, 0.4);
+
+                &:nth-child(1) {
+                    left: 25%;
+                    top: 15%;
+                }
+
+                &:nth-child(2) {
+                    left: 35%;
+                    top: 45%;
+                    animation-delay: 0.5s;
+                }
+
+                &:nth-child(3) {
+                    left: 20%;
+                    top: 75%;
+                    animation-delay: 1s;
+                }
+            }
+
+            .cd-effect {
+                position: absolute;
+                left: 40%;
+                top: 25%;
+                width: 160px;
+                height: 160px;
+                border-radius: 50%;
+                background: radial-gradient(circle at center, 
+                    rgba(255, 255, 255, 0.3) 0%,
+                    rgba(255, 255, 255, 0.2) 30%,
+                    rgba(255, 255, 255, 0.15) 60%,
+                    transparent 80%
+                );
+                border: 4px solid rgba(103, 195, 255, 0.5);
+                box-shadow: 
+                    0 0 40px rgba(103, 195, 255, 0.4),
+                    inset 0 0 40px rgba(103, 195, 255, 0.4);
+                transform: translateX(-50%);
+                animation: rotate 20s linear infinite;
+            }
+        }
+    }
+
+    // 右侧装饰面板
+    .right-panel {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 450px;
+        height: 100%;
+        background: linear-gradient(to left,
+            rgba(32, 40, 51, 1) 0%,
+            rgba(32, 40, 51, 1) 15%,
+            rgba(45, 58, 75, 0.95) 30%,
+            rgba(45, 58, 75, 0.6) 60%,
+            rgba(45, 58, 75, 0) 100%
+        );
+        z-index: 0;
+
+        .wave-bars {
+            position: absolute;
+            right: 25%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 6px;
+
+            .bar {
+                width: 3px;
+                height: 40px;
+                background: rgba(103, 195, 255, 0.4);
+                border-radius: 2px;
+                animation: waveBar 1.2s ease-in-out infinite;
+
+                @for $i from 1 through 12 {
+                    &:nth-child(#{$i}) {
+                        animation-delay: $i * 0.1s;
+                    }
+                }
+            }
+        }
+
+        .circles {
+            position: absolute;
+            right: 20%;
+            top: 30%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+
+            .circle {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background: rgba(103, 195, 255, 0.3);
+                animation: pulse 2s ease-in-out infinite;
+
+                &:nth-child(1) { animation-delay: 0s; }
+                &:nth-child(2) { animation-delay: 0.5s; }
+                &:nth-child(3) { animation-delay: 1s; }
+            }
+        }
+    }
+
     .settings-container {
+        position: relative;
+        z-index: 1;
         width: 90%;
-        max-width: 1200px;
-        margin: 0 auto;
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0;
         display: flex;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
         overflow: hidden;
         
         .settings-sidebar {
-            width: 250px;
-            background-color: #2d3a4b;
+            width: 280px;
+            background-color: rgba(45, 58, 75, 0.95);
             color: white;
             padding: 30px 0;
             
@@ -450,7 +606,8 @@ export default {
         
         .settings-content {
             flex: 1;
-            padding: 30px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.98);
             
             .settings-section {
                 h2 {
@@ -471,7 +628,74 @@ export default {
     }
 }
 
-// 响应式设计
+// 动画效果
+@keyframes rotate {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+        opacity: 1;
+    }
+}
+
+@keyframes waveBar {
+    0%, 100% {
+        height: 40px;
+        opacity: 0.8;
+    }
+    50% {
+        height: 60px;
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+// 响应式布局调整
+@media screen and (max-width: 1800px) {
+    .user-settings-page {
+        .settings-container {
+            margin: 30px auto;
+            max-width: 900px;
+        }
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .user-settings-page {
+        .settings-container {
+            margin: 25px auto;
+            max-width: 800px;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .user-settings-page {
+        .settings-container {
+            margin: 20px auto;
+            width: 95%;
+        }
+    }
+}
+
+// 保留原有的响应式设计
 @media screen and (max-width: 992px) {
     .user-settings-page {
         .settings-container {
