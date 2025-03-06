@@ -159,7 +159,7 @@
     <!-- 弹窗部分 -->
     <el-dialog title="新建歌单" :visible.sync="addFormDialogVisible" width="30%" class="custom-dialog">
         <el-form :model="form" ref="form" :rules="rules" id="form">
-            <el-form-item label="歌单名" prop="title" :label-width="formLabelWidth">
+            <el-form-item label="歌单" prop="title" :label-width="formLabelWidth">
                 <el-input v-model="form.title" placeholder="请输入歌单名"></el-input>
             </el-form-item>
             <el-form-item label="简介" prop="introduction" :label-width="formLabelWidth">

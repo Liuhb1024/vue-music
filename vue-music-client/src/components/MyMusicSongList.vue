@@ -4,21 +4,26 @@
         <li v-for="item in songLists" :index="item.id" @click="handleDisplaySongListDetail(item.id)">
             <img :src="getCoverImgUrl(item.pic)" />
             <div class="left-button">
-                <el-button @click.stop="handleRemoveSongList(/*歌单id*/item.id)" type="danger" icon="el-icon-delete" circle></el-button>
+                <el-popconfirm
+                    confirm-button-text="确定"
+                    cancel-button-text="取消"
+                    icon="el-icon-warning"
+                    icon-color="#FF4757"
+                    title="删除歌单后不可恢复，是否继续？"
+                    @confirm="delSongList(item.id)"
+                >
+                    <el-button 
+                        slot="reference" 
+                        @click.stop 
+                        type="danger" 
+                        icon="el-icon-delete" 
+                        circle>
+                    </el-button>
+                </el-popconfirm>
             </div>
             <span>{{ item.title }}</span>
         </li>
     </ul>
-    <!-- 删除歌单信息 -->
-    <div class="container">
-        <el-dialog title="删除歌单信息" :visible.sync="delDialogVisible" width="300px">
-            <span>删除歌单后不可恢复，是否继续？</span>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="delDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="delSongList">确 定</el-button>
-            </div>
-        </el-dialog>
-    </div>
 </div>
 </template>
 
@@ -45,10 +50,7 @@ export default {
         ...mapGetters(['userInfo'])
     },
     data() {
-        return {
-            delDialogVisible: false,
-            delSongListId: -1, //要删除的歌单id
-        }
+        return {}
     },
     mounted() {
 
@@ -66,47 +68,31 @@ export default {
                 this.$emit('sendSongsOfMyMusicPage', res)
             }).catch(err => console.log('获取歌单详情：', err))
         },
-        handleRemoveSongList(songListId) {
-            this.delSongListId = songListId
-            this.delDialogVisible = true
-        },
-        delSongList() {
+        delSongList(songListId) {
             if (this.myMusicSongListPageName === '用户创建的歌单') {
-                reomoveSongListsCreatedByConsumerThroughSongListId(this.delSongListId).then(jsonData => {
+                reomoveSongListsCreatedByConsumerThroughSongListId(songListId).then(jsonData => {
                     if (jsonData.code) {
-                        this.$message({
-                            message: jsonData.msg,
-                            type: 'success',
-                            duration: 2000
-                        })
-                        this.delDialogVisible = false
-                        this.getSongLists()
+                        this.$message.success(jsonData.msg);
+                        this.getSongLists();
                     } else {
-                        this.$message({
-                            message: jsonData.msg,
-                            type: 'error',
-                            duration: 2000
-                        })
+                        this.$message.error(jsonData.msg);
                     }
-                }).catch(err => console.log('删除用户创建的歌单:', err))
+                }).catch(err => {
+                    console.log('删除用户创建的歌单:', err);
+                    this.$message.error('删除失败，请稍后重试');
+                });
             } else {
-                reomoveFavoriteSongList(this.userInfo.id, this.delSongListId).then(jsonData => {
+                reomoveFavoriteSongList(this.userInfo.id, songListId).then(jsonData => {
                     if (jsonData.code) {
-                        this.$message({
-                            message: jsonData.msg,
-                            type: 'success',
-                            duration: 2000
-                        })
-                        this.delDialogVisible = false
-                        this.getSongLists()
+                        this.$message.success(jsonData.msg);
+                        this.getSongLists();
                     } else {
-                        this.$message({
-                            message: jsonData.msg,
-                            type: 'error',
-                            duration: 2000
-                        })
+                        this.$message.error(jsonData.msg);
                     }
-                }).catch(err => console.log('删除收藏的歌单:', err))
+                }).catch(err => {
+                    console.log('删除收藏的歌单:', err);
+                    this.$message.error('删除失败，请稍后重试');
+                });
             }
         }
     }
@@ -186,6 +172,35 @@ export default {
     &:hover {
         background: rgba(255, 71, 87, 0.8);
         transform: scale(1.1);
+    }
+}
+</style>
+
+<style lang="scss">
+/* 自定义 popconfirm 的样式 */
+.el-popconfirm {
+    .el-popconfirm__main {
+        margin-bottom: 10px;
+        color: #2d3a4b !important;
+    }
+
+    .el-button--primary {
+        background-color: #67c3ff !important;
+        border-color: #67c3ff !important;
+        
+        &:hover {
+            background-color: #85d0ff !important;
+            border-color: #85d0ff !important;
+        }
+    }
+    
+    .el-button--default {
+        border-color: #67c3ff !important;
+        color: #67c3ff !important;
+        
+        &:hover {
+            background-color: rgba(103, 195, 255, 0.1) !important;
+        }
     }
 }
 </style>
