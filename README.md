@@ -1,4 +1,4 @@
-# 飞享音乐网站
+# 音乐网站
 
 ## 项目概述
 
@@ -320,46 +320,65 @@ npm run build
 
 ### 网站前台
 
+#### 登录
+
+![image-20250309174252291](F:\project\feixiang-website\README.assets\image-20250309174252291.png)
+
+#### 注册
+
+![image-20250309174244749](F:\project\feixiang-website\README.assets\image-20250309174244749.png)
+
+#### 个人设置
+
+![image-20250309174308169](F:\project\feixiang-website\README.assets\image-20250309174308169.png)
+
 #### 首页
-![首页](README.assets/image-20230306113243039.png)
+
+![image-20250309173746453](F:\project\feixiang-website\README.assets\image-20250309173746453.png)
 
 #### 检索所有歌手
-![检索所有歌手](README.assets/image-20230306125551940.png)
+
+![image-20250309173825974](F:\project\feixiang-website\README.assets\image-20250309173825974.png)
 
 #### 检索所有歌单
-![检索所有歌单](README.assets/image-20230306113326730.png)
+![image-20250309173837402](F:\project\feixiang-website\README.assets\image-20250309173837402.png)
 
 #### 歌单详情页
-![歌单详情页](README.assets/image-20230306113341030.png)
+![image-20250309173849721](F:\project\feixiang-website\README.assets\image-20250309173849721.png)
 
 #### 未登录-我的音乐
-![未登录-我的音乐](README.assets/9.png)
+![image-20250309173903722](F:\project\feixiang-website\README.assets\image-20250309173903722.png)
 
 #### 已登录-我的音乐
-![已登录-我的音乐](README.assets/image-20230306113837014.png)
+![image-20250309173922802](F:\project\feixiang-website\README.assets\image-20250309173922802.png)
 
 #### 播放列表
-![播放列表](README.assets/image-20230306113201662.png)
+![image-20250309173933294](F:\project\feixiang-website\README.assets\image-20250309173933294.png)
 
 ### 网站后台
 
 #### 后台登录
-![后台登录](README.assets/1.png)
+![image-20250309174016640](F:\project\feixiang-website\README.assets\image-20250309174016640.png)
+
+#### 系统主页
+
+![image-20250309174114959](F:\project\feixiang-website\README.assets\image-20250309174114959.png)
 
 #### 用户管理
-![用户管理](README.assets/image-20230306114207933.png)
+
+![image-20250309174100273](F:\project\feixiang-website\README.assets\image-20250309174100273.png)
 
 #### 歌手管理
-![歌手管理](README.assets/2.png)
+![image-20250309174127672](F:\project\feixiang-website\README.assets\image-20250309174127672.png)
 
 #### 歌手-歌曲管理
-![歌手-歌曲管理](README.assets/3.png)
+![image-20250309174145524](F:\project\feixiang-website\README.assets\image-20250309174145524.png)
 
 #### 歌单管理
-![歌单管理](README.assets/4.png)
+![image-20250309174157185](F:\project\feixiang-website\README.assets\image-20250309174157185.png)
 
 #### 歌单-歌曲管理
-![歌单-歌曲管理](README.assets/5.png)
+![image-20250309174207177](F:\project\feixiang-website\README.assets\image-20250309174207177.png)
 
 ## 环境依赖
 
@@ -388,15 +407,3 @@ npm run build
 ### 后端依赖
 
 详见项目中的`pom.xml`文件
-
-## 开发与贡献
-
-欢迎提交问题和功能请求。如果您想贡献代码，请遵循以下步骤：
-
-1. Fork 项目
-2. 创建您的特性分支 (`git checkout -b feature/amazing-feature`)
-3. 提交您的更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 打开一个 Pull Request
-
-Happy Coding Everyday!
