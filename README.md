@@ -322,63 +322,63 @@ npm run build
 
 #### 登录
 
-![image-20250309174252291](F:\project\feixiang-website\README.assets\image-20250309174252291.png)
+![image-20250309174252291](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174252291.png)
 
 #### 注册
 
-![image-20250309174244749](F:\project\feixiang-website\README.assets\image-20250309174244749.png)
+![image-20250309174244749](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174244749.png)
 
 #### 个人设置
 
-![image-20250309174308169](F:\project\feixiang-website\README.assets\image-20250309174308169.png)
+![image-20250309174308169](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174308169.png)
 
 #### 首页
 
-![image-20250309173746453](F:\project\feixiang-website\README.assets\image-20250309173746453.png)
+![image-20250309173746453](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173746453.png)
 
 #### 检索所有歌手
 
-![image-20250309173825974](F:\project\feixiang-website\README.assets\image-20250309173825974.png)
+![image-20250309173825974](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173825974.png)
 
 #### 检索所有歌单
-![image-20250309173837402](F:\project\feixiang-website\README.assets\image-20250309173837402.png)
+![image-20250309173837402](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173837402.png)
 
 #### 歌单详情页
-![image-20250309173849721](F:\project\feixiang-website\README.assets\image-20250309173849721.png)
+![image-20250309173849721](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173849721.png)
 
 #### 未登录-我的音乐
-![image-20250309173903722](F:\project\feixiang-website\README.assets\image-20250309173903722.png)
+![image-20250309173903722](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173903722.png)
 
 #### 已登录-我的音乐
-![image-20250309173922802](F:\project\feixiang-website\README.assets\image-20250309173922802.png)
+![image-20250309173922802](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173922802.png)
 
 #### 播放列表
-![image-20250309173933294](F:\project\feixiang-website\README.assets\image-20250309173933294.png)
+![image-20250309173933294](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309173933294.png)
 
 ### 网站后台
 
 #### 后台登录
-![image-20250309174016640](F:\project\feixiang-website\README.assets\image-20250309174016640.png)
+![image-20250309174016640](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174016640.png)
 
 #### 系统主页
 
-![image-20250309174114959](F:\project\feixiang-website\README.assets\image-20250309174114959.png)
+![image-20250309174114959](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174114959.png)
 
 #### 用户管理
 
-![image-20250309174100273](F:\project\feixiang-website\README.assets\image-20250309174100273.png)
+![image-20250309174100273](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174100273.png)
 
 #### 歌手管理
-![image-20250309174127672](F:\project\feixiang-website\README.assets\image-20250309174127672.png)
+![image-20250309174127672](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174127672.png)
 
 #### 歌手-歌曲管理
-![image-20250309174145524](F:\project\feixiang-website\README.assets\image-20250309174145524.png)
+![image-20250309174145524](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174145524.png)
 
 #### 歌单管理
-![image-20250309174157185](F:\project\feixiang-website\README.assets\image-20250309174157185.png)
+![image-20250309174157185](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174157185.png)
 
 #### 歌单-歌曲管理
-![image-20250309174207177](F:\project\feixiang-website\README.assets\image-20250309174207177.png)
+![image-20250309174207177](https://github.com/Liuhb1024/vue-music/blob/main/README.assets/image-20250309174207177.png)
 
 ## 环境依赖
 
