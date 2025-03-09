@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.zetiny.vuemusicproject.dao.ShareLikeMapper">
+
+    <resultMap id="ShareLikeMap" type="top.zetiny.vuemusicproject.bean.ShareLike">
+        <id column="id" property="id"/>
+        <result column="share_id" property="shareId"/>
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 添加点赞 -->
+    <insert id="addLike" parameterType="top.zetiny.vuemusicproject.bean.ShareLike" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO share_like (share_id, user_id, create_time)
+        VALUES (#{shareId}, #{userId}, NOW())
+    </insert>
+
+    <!-- 取消点赞 -->
+    <delete id="removeLike">
+        DELETE FROM share_like
+        WHERE share_id = #{param1} AND user_id = #{param2}
+    </delete>
+
+    <!-- 检查是否已点赞 -->
+    <select id="checkLike" resultMap="ShareLikeMap">
+        SELECT *
+        FROM share_like
+        WHERE share_id = #{param1} AND user_id = #{param2}
+    </select>
+
+</mapper>

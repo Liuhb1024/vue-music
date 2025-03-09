@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.zetiny.vuemusicproject.dao.MessageMapper">
+
+    <resultMap id="MessageMap" type="top.zetiny.vuemusicproject.bean.Message">
+        <id column="id" property="id"/>
+        <result column="sender_id" property="senderId"/>
+        <result column="receiver_id" property="receiverId"/>
+        <result column="content" property="content"/>
+        <result column="content_type" property="contentType"/>
+        <result column="content_id" property="contentId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- 发送消息 -->
+    <insert id="sendMessage" parameterType="top.zetiny.vuemusicproject.bean.Message" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO message (sender_id, receiver_id, content, content_type, content_id, create_time, status)
+        VALUES (#{senderId}, #{receiverId}, #{content}, #{contentType}, #{contentId}, NOW(), 0)
+    </insert>
+
+    <!-- 将所有消息标记为已读 -->
+    <update id="markAllAsRead">
+        UPDATE message
+        SET status = 1
+        WHERE receiver_id = #{userId} AND status = 0
+    </update>
+
+    <!-- 将指定消息标记为已读 -->
+    <update id="markAsRead">
+        UPDATE message
+        SET status = 1
+        WHERE id = #{param1} AND receiver_id = #{param2}
+    </update>
+
+    <!-- 获取聊天历史记录 -->
+    <select id="getChatHistory" resultMap="MessageMap">
+        SELECT *
+        FROM message
+        WHERE (sender_id = #{param1} AND receiver_id = #{param2})
+           OR (sender_id = #{param2} AND receiver_id = #{param1})
+        ORDER BY create_time DESC
+        LIMIT #{param4} OFFSET #{param3}
+    </select>
+
+    <!-- 获取未读消息数量 -->
+    <select id="getUnreadCount" resultType="int">
+        SELECT COUNT(*)
+        FROM message
+        WHERE receiver_id = #{userId} AND status = 0
+    </select>
+
+</mapper>

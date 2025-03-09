@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.zetiny.vuemusicproject.dao.FriendMapper">
+
+    <resultMap id="FriendMap" type="top.zetiny.vuemusicproject.bean.Friend">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="friend_id" property="friendId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!-- 添加好友请求 -->
+    <insert id="addFriend" parameterType="top.zetiny.vuemusicproject.bean.Friend">
+        INSERT INTO friend (user_id, friend_id, create_time, update_time, status)
+        VALUES (#{userId}, #{friendId}, NOW(), NOW(), 0)
+    </insert>
+
+    <!-- 更新好友状态 -->
+    <update id="updateFriendStatus">
+        UPDATE friend
+        SET status = #{param2}, update_time = NOW()
+        WHERE id = #{param1}
+    </update>
+
+    <!-- 获取好友列表 -->
+    <select id="getFriendList" resultMap="FriendMap">
+        SELECT *
+        FROM friend
+        WHERE (user_id = #{userId} OR friend_id = #{userId}) AND status = 1
+    </select>
+
+    <!-- 检查好友关系 -->
+    <select id="checkFriendship" resultMap="FriendMap">
+        SELECT *
+        FROM friend
+        WHERE (user_id = #{param1} AND friend_id = #{param2} AND status = 1)
+           OR (user_id = #{param2} AND friend_id = #{param1} AND status = 1)
+    </select>
+
+    <!-- 获取待处理的好友请求 -->
+    <select id="getPendingFriendRequests" resultMap="FriendMap">
+        SELECT *
+        FROM friend
+        WHERE friend_id = #{userId} AND status = 0
+    </select>
+
+</mapper>

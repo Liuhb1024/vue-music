@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.zetiny.vuemusicproject.dao.ShareMapper">
+
+    <resultMap id="ShareMap" type="top.zetiny.vuemusicproject.bean.Share">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="content_id" property="contentId"/>
+        <result column="content_type" property="contentType"/>
+        <result column="description" property="description"/>
+        <result column="share_time" property="shareTime"/>
+        <result column="status" property="status"/>
+        <result column="likes" property="likes"/>
+        <result column="comments" property="comments"/>
+    </resultMap>
+
+    <!-- 创建分享 -->
+    <insert id="createShare" parameterType="top.zetiny.vuemusicproject.bean.Share" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO share (user_id, content_id, content_type, description, share_time, status, likes, comments)
+        VALUES (#{userId}, #{contentId}, #{contentType}, #{description}, NOW(), 1, 0, 0)
+    </insert>
+
+    <!-- 获取分享列表 -->
+    <select id="getShareList" resultMap="ShareMap">
+        SELECT *
+        FROM share
+        WHERE status = 1
+        ORDER BY share_time DESC
+        LIMIT #{param2} OFFSET #{param1}
+    </select>
+
+    <!-- 获取用户分享 -->
+    <select id="getUserShares" resultMap="ShareMap">
+        SELECT *
+        FROM share
+        WHERE user_id = #{userId} AND status = 1
+        ORDER BY share_time DESC
+    </select>
+
+    <!-- 根据ID获取分享 -->
+    <select id="getShareById" resultMap="ShareMap">
+        SELECT *
+        FROM share
+        WHERE id = #{shareId} AND status = 1
+    </select>
+
+    <!-- 增加点赞数 -->
+    <update id="incrementLikes">
+        UPDATE share
+        SET likes = likes + 1
+        WHERE id = #{shareId}
+    </update>
+
+    <!-- 减少点赞数 -->
+    <update id="decrementLikes">
+        UPDATE share
+        SET likes = likes - 1
+        WHERE id = #{shareId} AND likes > 0
+    </update>
+
+    <!-- 增加评论数 -->
+    <update id="incrementComments">
+        UPDATE share
+        SET comments = comments + 1
+        WHERE id = #{shareId}
+    </update>
+
+</mapper>

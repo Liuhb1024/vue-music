@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.zetiny.vuemusicproject.dao.ShareCommentMapper">
+
+    <resultMap id="ShareCommentMap" type="top.zetiny.vuemusicproject.bean.ShareComment">
+        <id column="id" property="id"/>
+        <result column="share_id" property="shareId"/>
+        <result column="user_id" property="userId"/>
+        <result column="content" property="content"/>
+        <result column="create_time" property="createTime"/>
+        <result column="likes" property="likes"/>
+    </resultMap>
+
+    <!-- 添加评论 -->
+    <insert id="addComment" parameterType="top.zetiny.vuemusicproject.bean.ShareComment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO share_comment (share_id, user_id, content, create_time, likes)
+        VALUES (#{shareId}, #{userId}, #{content}, NOW(), 0)
+    </insert>
+
+    <!-- 根据分享ID获取评论 -->
+    <select id="getCommentsByShareId" resultMap="ShareCommentMap">
+        SELECT *
+        FROM share_comment
+        WHERE share_id = #{shareId}
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>
